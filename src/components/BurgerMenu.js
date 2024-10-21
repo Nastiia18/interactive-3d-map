@@ -14,17 +14,14 @@ const BurgerMenu = ({ rooms, onRoomClick }) => {
     <div>
       {/* Button to toggle the burger menu */}
       <button className="burger-toggle" onClick={toggleMenu}>
-        {isMenuOpen ? 'Close Menu' : 'Навігація'}
+        {isMenuOpen ? 'Закрити навігацію' : 'Навігація'}
       </button>
 
       {/* Conditional rendering of the burger menu */}
       {isMenuOpen && (
         <div className="burger-menu">
 
-          {/* Close Menu Button */}
-          <button className="close-menu-btn" onClick={toggleMenu}>
-            X
-          </button>
+        
 
           {/* First Accordion */}
       <div className="accordion">

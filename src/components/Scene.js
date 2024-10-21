@@ -16,7 +16,7 @@ const Scene = ({ setActiveRoom, activeRoom }) => {
 
   return (
     <Canvas style={{ height: '100vh' }}>
-      <color attach="background" args={['white']} />
+      <color attach="background" args={['#d1cbc3']} />
       <ambientLight intensity={0.5} />
       <directionalLight position={[10, 10, 5]} />
 
@@ -27,21 +27,21 @@ const Scene = ({ setActiveRoom, activeRoom }) => {
       <InteractiveZone
         modelPath="../models/emmit.glb" // Path to 3D model for Room 1
         position={[0, 0, 0]}
-        color="red" // Assign color
+        color="#111a68" // Assign color
         onClick={() => handleZoneClick('EMMIT')}
         isActive={activeRoom === 'EMMIT'}
       />
       <InteractiveZone
         modelPath="../models/dekan_economic.glb" // Path to 3D model for Room 2
         position={[0, 0, 0]}
-        color="red" // Assign color
+        color="#111a68" // Assign color
         onClick={() => handleZoneClick('Room 2')}
         isActive={activeRoom === 'Room 2'}
       />
       <InteractiveZone
         modelPath="../models/dekanat_economic.glb" // Path to 3D model for Room 3
         position={[0, 0, 0]}
-        color="red" // Assign color
+        color="#111a68" // Assign color
         onClick={() => handleZoneClick('Room 3')}
         isActive={activeRoom === 'Room 3'}
       />

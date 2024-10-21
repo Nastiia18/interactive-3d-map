@@ -5,56 +5,67 @@
     border: none;
     cursor: pointer;
     font-size: 16px;
-    z-index: 9999999;
+    z-index: 999;
+    position: absolute;
   }
   
   .burger-menu {
-    width: 200px;
-    background: #333;
-    color: white;
-    padding: 15px;
+    width: 250px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #111a68; /* Text color */
+    padding: 50px 10px 10px 10px;
+    border-radius: 0 0 10px 0;
     position: absolute;
     top: 0;
     left: 0;
-    height: 100vh;
+    max-height: 100vh;
     overflow: auto;
     transition: transform 0.3s ease-in-out;
-    z-index: 9999999;
+    z-index: 99;
+    box-shadow: 0 2px 5px #111a6830;
+    backdrop-filter: blur(2px);
   }
   
   .accordion {
-    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 5px #111a6830;
+    backdrop-filter: blur(2px);
+    border-radius: 5px;
   }
   
   .accordion-toggle {
-    background: #444;
-    color: white;
-    padding: 10px;
+    color: #111a68; /* Text color */
+    padding: 5px 10px;
     width: 100%;
     text-align: left;
     border: none;
     outline: none;
     cursor: pointer;
+    font-weight: 700;
+    background: #fff;
+  }
+  .accordion-toggle:hover {
+    background: #111a68; /* Text color */
+    color: #fff;
   }
   
   .accordion-content {
-    background: #555;
-    padding: 10px;
+    padding: 0;
+    border-top:1px solid #111a68;
   }
   
   .room-btn {
-    background: #666;
-    color: white;
-    padding: 10px;
+    color: #111a68; /* Text color */
+    padding: 5px 5px 5px 20px;
     border: none;
     width: 100%;
     text-align: left;
     cursor: pointer;
-    margin-bottom: 5px;
   }
   
   .room-btn:hover {
-    background: #777;
+    background: #111a68;
+    color: #fff;
   }
   
   /* Close Menu Button Styles */
