@@ -1,9 +1,9 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
-import InteractiveZone from './InteractiveZone'; // Import the InteractiveZone component
+import InteractiveZone from './InteractiveZone'; // Import InteractiveZone component
 
-const Cube = ({ setActiveRoom, activeRoom }) => {
+const Scene = ({ setActiveRoom, activeRoom }) => {
   const handleZoneClick = (roomName) => {
     setActiveRoom(roomName); // Trigger sidebar when zone is clicked
   };
@@ -25,6 +25,7 @@ const Cube = ({ setActiveRoom, activeRoom }) => {
         position={[-2, 0, 0]} // Room 1
         args={[1, 1, 1]}
         color="red"
+        label="Room 1"
         onClick={() => handleZoneClick('Room 1')}
         isActive={activeRoom === 'Room 1'} // Highlight if active
       />
@@ -32,6 +33,7 @@ const Cube = ({ setActiveRoom, activeRoom }) => {
         position={[2, 0, 0]} // Room 2
         args={[1, 1, 1]}
         color="green"
+        label="Room 2"
         onClick={() => handleZoneClick('Room 2')}
         isActive={activeRoom === 'Room 2'} // Highlight if active
       />
@@ -39,6 +41,7 @@ const Cube = ({ setActiveRoom, activeRoom }) => {
         position={[0, 2, 0]} // Room 3
         args={[1, 1, 1]}
         color="yellow"
+        label="Room 3"
         onClick={() => handleZoneClick('Room 3')}
         isActive={activeRoom === 'Room 3'} // Highlight if active
       />
@@ -56,4 +59,4 @@ const Cube = ({ setActiveRoom, activeRoom }) => {
   );
 };
 
-export default Cube;
+export default Scene;
