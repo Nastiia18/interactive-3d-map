@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+/* App.css */
+html, body, #root {
+  height: 100%; /* Ensure all elements from the root take full height */
+  margin: 0; /* Remove any margin */
+  padding: 0; /* Remove any padding */
+  box-sizing: border-box; /* Ensure consistent sizing */
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Make the app take 100% of the viewport height */
+}
+
+footer {
+  margin-top: auto; /* Push the footer to the bottom */
+}
