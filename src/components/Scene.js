@@ -49,8 +49,8 @@ const Scene = ({ setActiveRoom, activeRoom }) => {
       <OrbitControls
         enablePan={true}
         enableZoom={true}
-        minPolarAngle={Math.PI / 4}
-        maxPolarAngle={Math.PI / 2}
+        minPolarAngle={Math.PI / 48}
+        maxPolarAngle={Math.PI / 3}
         enableDamping={true}
         dampingFactor={0.1}
         rotateSpeed={0.5}
