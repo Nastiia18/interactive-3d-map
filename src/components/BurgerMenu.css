@@ -1,0 +1,74 @@
+.burger-toggle {
+    background-color: #444;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 9999999;
+  }
+  
+  .burger-menu {
+    width: 200px;
+    background: #333;
+    color: white;
+    padding: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow: auto;
+    transition: transform 0.3s ease-in-out;
+    z-index: 9999999;
+  }
+  
+  .accordion {
+    margin-bottom: 10px;
+  }
+  
+  .accordion-toggle {
+    background: #444;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  .accordion-content {
+    background: #555;
+    padding: 10px;
+  }
+  
+  .room-btn {
+    background: #666;
+    color: white;
+    padding: 10px;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    margin-bottom: 5px;
+  }
+  
+  .room-btn:hover {
+    background: #777;
+  }
+  
+  /* Close Menu Button Styles */
+.close-menu-btn {
+    background-color: #ff4444;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+  }
+  
+  .close-menu-btn:hover {
+    background-color: #ff6666;
+  }

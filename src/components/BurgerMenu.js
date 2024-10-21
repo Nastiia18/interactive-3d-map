@@ -1,76 +1,66 @@
 import React, { useState } from 'react';
+import './BurgerMenu.css';
 
 const BurgerMenu = ({ rooms, onRoomClick }) => {
-  const [isOpen, setIsOpen] = useState(false); // State for menu visibility
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State to manage burger menu visibility
+  const [isFirstAccordionOpen, setFirstAccordionOpen] = useState(false);
+  const [isSecondAccordionOpen, setSecondAccordionOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen); // Toggle menu visibility
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen); // Function to toggle the burger menu
+  const toggleFirstAccordion = () => setFirstAccordionOpen(!isFirstAccordionOpen);
+  const toggleSecondAccordion = () => setSecondAccordionOpen(!isSecondAccordionOpen);
 
   return (
-    <>
-      {/* Burger Menu Icon */}
-      <div style={burgerStyles} onClick={toggleMenu}>
-        <div style={burgerLineStyles}></div>
-        <div style={burgerLineStyles}></div>
-        <div style={burgerLineStyles}></div>
+    <div>
+      {/* Button to toggle the burger menu */}
+      <button className="burger-toggle" onClick={toggleMenu}>
+        {isMenuOpen ? 'Close Menu' : 'Навігація'}
+      </button>
+
+      {/* Conditional rendering of the burger menu */}
+      {isMenuOpen && (
+        <div className="burger-menu">
+
+          {/* Close Menu Button */}
+          <button className="close-menu-btn" onClick={toggleMenu}>
+            X
+          </button>
+
+          {/* First Accordion */}
+      <div className="accordion">
+        <button className="accordion-toggle" onClick={toggleFirstAccordion}>
+          Економічний факультет
+        </button>
+        {isFirstAccordionOpen && (
+          <div className="accordion-content">
+            <button className="room-btn" onClick={() => onRoomClick('EMMIT')}>
+              Кафедра ЕММІТ
+            </button>
+            <button className="room-btn" onClick={() => onRoomClick('Room 2')}>
+              Декан Економічного факультету
+            </button>
+            <button className="room-btn" onClick={() => onRoomClick('Room 3')}>
+              Деканат економічного факультету
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* Room List */}
-      {isOpen && (
-        <div style={menuStyles}>
-          <h3>Rooms</h3>
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            {rooms.map((room, index) => (
-              <li key={index} style={menuItemStyles} onClick={() => onRoomClick(room)}>
-                {room}
-              </li>
-            ))}
-          </ul>
+      {/* Second Accordion */}
+      <div className="accordion">
+        <button className="accordion-toggle" onClick={toggleSecondAccordion}>
+          Аудиторії
+        </button>
+        {isSecondAccordionOpen && (
+          <div className="accordion-content">
+            
+          </div>
+        )}
+          </div>
         </div>
       )}
-    </>
+    </div>
   );
-};
-
-// Inline styles for the burger menu and sidebar
-const burgerStyles = {
-  position: 'fixed',
-  top: '20px',
-  left: '20px',
-  width: '30px',
-  height: '30px',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  cursor: 'pointer',
-  zIndex: 1001
-};
-
-const burgerLineStyles = {
-  width: '100%',
-  height: '4px',
-  backgroundColor: '#333'
-};
-
-const menuStyles = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '200px',
-  height: '100%',
-  background: '#333',
-  color: '#fff',
-  padding: '20px',
-  zIndex: 1000,
-  boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 4px'
-};
-
-const menuItemStyles = {
-  marginBottom: '10px',
-  cursor: 'pointer',
-  color: '#fff',
-  fontSize: '18px',
 };
 
 export default BurgerMenu;
