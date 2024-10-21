@@ -18,7 +18,7 @@ function App() {
   const closeSidebar = () => setActiveRoom(null); // Function to close the sidebar
 
   // Define rooms in an array
-  const rooms = ['Room 1', 'Room 2', 'Room 3'];
+  const rooms = ['EMMIT', 'Room 2', 'Room 3'];
 
   // Handle room selection from the burger menu
   const handleRoomSelect = (room) => {

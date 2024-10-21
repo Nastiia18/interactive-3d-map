@@ -1,11 +1,12 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, useGLTF } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import InteractiveZone from './InteractiveZone';
+import { useGLTF } from '@react-three/drei';
 
 const FloorModel = () => {
   const { scene } = useGLTF('../models/floor1.glb'); // Replace with the actual path to your GLB model
-  return <primitive object={scene} scale={0.1} />;
+  return <primitive object={scene} scale={0.05} />;
 };
 
 const Scene = ({ setActiveRoom, activeRoom }) => {
@@ -19,30 +20,30 @@ const Scene = ({ setActiveRoom, activeRoom }) => {
       <ambientLight intensity={0.5} />
       <directionalLight position={[10, 10, 5]} />
 
-      {/* Load the floor model instead of a cube */}
+      {/* Load the floor model */}
       <FloorModel />
 
-      {/* Interactive Zones */}
+      {/* Interactive Zones with 3D models and different colors */}
       <InteractiveZone
-        position={[-2, 0, 0]} // Room 1
-        args={[1, 1, 1]}
-        color="red"
-        onClick={() => handleZoneClick('Room 1')}
-        isActive={activeRoom === 'Room 1'} // Highlight if active
+        modelPath="../models/emmit.glb" // Path to 3D model for Room 1
+        position={[0, 0, 0]}
+        color="red" // Assign color
+        onClick={() => handleZoneClick('EMMIT')}
+        isActive={activeRoom === 'EMMIT'}
       />
       <InteractiveZone
-        position={[25, 0.65, -7.4]} // Room 2
-        args={[3, 1, 2]}
-        color="#ffffff"
+        modelPath="../models/dekan_economic.glb" // Path to 3D model for Room 2
+        position={[0, 0, 0]}
+        color="red" // Assign color
         onClick={() => handleZoneClick('Room 2')}
-        isActive={activeRoom === 'Room 2'} // Highlight if active
+        isActive={activeRoom === 'Room 2'}
       />
       <InteractiveZone
-        position={[0, 1, 0]} // Room 3
-        args={[1, 1, 1]}
-        color="yellow"
+        modelPath="../models/dekanat_economic.glb" // Path to 3D model for Room 3
+        position={[0, 0, 0]}
+        color="red" // Assign color
         onClick={() => handleZoneClick('Room 3')}
-        isActive={activeRoom === 'Room 3'} // Highlight if active
+        isActive={activeRoom === 'Room 3'}
       />
 
       <OrbitControls
