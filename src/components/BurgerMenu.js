@@ -50,6 +50,9 @@ const BurgerMenu = ({ rooms, onRoomClick }) => {
         </button>
         {isSecondAccordionOpen && (
           <div className="accordion-content">
+            <button className="room-btn" onClick={() => onRoomClick('Rector')}>
+              Ректор
+            </button>
             
           </div>
         )}
