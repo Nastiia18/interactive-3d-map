@@ -5,7 +5,6 @@ import { Text } from '@react-three/drei';
 const BillboardText = ({ text, position }) => {
   const ref = React.useRef();
 
-  // Make the text face the camera
   useFrame(({ camera }) => {
     if (ref.current) {
       ref.current.lookAt(camera.position);
@@ -18,8 +17,8 @@ const BillboardText = ({ text, position }) => {
       position={position}
       fontSize={0.5}
       color="black"
-      anchorX="center" // Center the text
-      anchorY="middle" // Center the text
+      anchorX="center" 
+      anchorY="middle" 
     >
       {text}
     </Text>

@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import "./BurgerMenu.css";
 
 const BurgerMenu = ({ rooms, onRoomClick }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State to manage burger menu visibility
+  const [isMenuOpen, setIsMenuOpen] = useState(false); 
   const [isFirstAccordionOpen, setFirstAccordionOpen] = useState(false);
   const [isSecondAccordionOpen, setSecondAccordionOpen] = useState(false);
   const [isThirdAccordionOpen, setThirdAccordionOpen] = useState(false);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen); // Function to toggle the burger menu
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen); 
   const toggleFirstAccordion = () => setFirstAccordionOpen(!isFirstAccordionOpen);
   const toggleSecondAccordion = () => setSecondAccordionOpen(!isSecondAccordionOpen);
   const toggleThirdAccordion = () => setThirdAccordionOpen(!isSecondAccordionOpen);

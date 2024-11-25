@@ -8,21 +8,21 @@ import BurgerMenu from './components/BurgerMenu';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [activeRoom, setActiveRoom] = useState(null); // State for the active room
+  const [activeRoom, setActiveRoom] = useState(null); 
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 3000); // Simulate loading time
+    const timer = setTimeout(() => setIsLoading(false), 3000); 
     return () => clearTimeout(timer);
   }, []);
 
-  const closeSidebar = () => setActiveRoom(null); // Function to close the sidebar
+  const closeSidebar = () => setActiveRoom(null); 
 
-  // Define rooms in an array
+  
   const rooms = ['EMMIT', 'Room 2', 'Room 3'];
 
-  // Handle room selection from the burger menu
+  
   const handleRoomSelect = (room) => {
-    setActiveRoom(room); // Open sidebar for selected room
+    setActiveRoom(room); 
   };
 
   return (
