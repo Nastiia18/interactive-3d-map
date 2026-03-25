@@ -1,28 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import LoadingScreen from './components/LoadingScreen';
-import Footer from './components/Footer';
-import Scene from './components/Scene';
-import Sidebar from './components/Sidebar';
-import BurgerMenu from './components/BurgerMenu';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import LoadingScreen from "./components/loading/LoadingScreen";
+import Footer from "./components/layout/Footer";
+import Scene from "./components/scene/Scene";
+import Sidebar from "./components/sidebar/Sidebar";
+import BurgerMenu from "./components/layout/BurgerMenu";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [activeRoom, setActiveRoom] = useState(null); 
+  const [activeRoom, setActiveRoom] = useState(null);
+  const [activeFloor, setActiveFloor] = useState(1); // Додаємо стан активного поверху
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 3000); 
+    const timer = setTimeout(() => setIsLoading(false), 3000);
     return () => clearTimeout(timer);
   }, []);
 
-  const closeSidebar = () => setActiveRoom(null); 
+  const closeSidebar = () => setActiveRoom(null);
 
-  
-  const rooms = ['EMMIT', 'Room 2', 'Room 3'];
+  const rooms = ["EMMIT", "Room 2", "Room 3"];
 
-  
   const handleRoomSelect = (room) => {
-    setActiveRoom(room); 
+    setActiveRoom(room);
+  };
+
+  const handleFloorChange = (floor) => {
+    setActiveFloor(floor); // Зміна активного поверху
   };
 
   return (
@@ -33,7 +36,12 @@ function App() {
         ) : (
           <>
             <BurgerMenu rooms={rooms} onRoomClick={handleRoomSelect} />
-            <Scene setActiveRoom={setActiveRoom} activeRoom={activeRoom} /> {/* Pass activeRoom to Cube */}
+            <Scene
+              setActiveRoom={setActiveRoom}
+              activeRoom={activeRoom}
+              activeFloor={activeFloor} // Передаємо activeFloor
+              onFloorChange={handleFloorChange} // Передаємо функцію для зміни поверху
+            />
             <Sidebar room={activeRoom} closeSidebar={closeSidebar} />
             <Footer />
           </>
