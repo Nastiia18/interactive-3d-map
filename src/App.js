@@ -25,7 +25,7 @@ function App() {
   };
 
   const handleFloorChange = (floor) => {
-    setActiveFloor(floor); // Зміна активного поверху
+    setActiveFloor(floor);
   };
 
   return (
@@ -39,8 +39,8 @@ function App() {
             <Scene
               setActiveRoom={setActiveRoom}
               activeRoom={activeRoom}
-              activeFloor={activeFloor} // Передаємо activeFloor
-              onFloorChange={handleFloorChange} // Передаємо функцію для зміни поверху
+              activeFloor={activeFloor}
+              onFloorChange={handleFloorChange}
             />
             <Sidebar room={activeRoom} closeSidebar={closeSidebar} />
             <Footer />
