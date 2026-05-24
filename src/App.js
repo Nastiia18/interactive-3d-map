@@ -10,6 +10,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [activeRoom, setActiveRoom] = useState(null);
   const [activeFloor, setActiveFloor] = useState(1); // Додаємо стан активного поверху
+  const [route, setRoute] = useState(null);
+  const [routeFrom, setRouteFrom] = useState(null);
+  const [routeTo, setRouteTo] = useState(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 3000);
@@ -35,12 +38,20 @@ function App() {
           <LoadingScreen />
         ) : (
           <>
-            <BurgerMenu rooms={rooms} onRoomClick={handleRoomSelect} />
+            <BurgerMenu
+                onRoomClick={setActiveRoom}
+                onCreateRoute={(from, to) => {
+                  setRouteFrom(from);
+                  setRouteTo(to);
+                }}
+            />
             <Scene
-              setActiveRoom={setActiveRoom}
-              activeRoom={activeRoom}
-              activeFloor={activeFloor}
-              onFloorChange={handleFloorChange}
+                setActiveRoom={setActiveRoom}
+                activeRoom={activeRoom}
+                activeFloor={activeFloor}
+                onFloorChange={setActiveFloor}
+                routeFrom={routeFrom}
+                routeTo={routeTo}
             />
             <Sidebar room={activeRoom} closeSidebar={closeSidebar} />
             <Footer />

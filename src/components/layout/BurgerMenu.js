@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./BurgerMenu.css";
 import { useTranslation } from "react-i18next";
 
-const BurgerMenu = ({ onRoomClick }) => {
+const BurgerMenu = ({ onRoomClick, onCreateRoute }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openSections, setOpenSections] = useState({
     admin: false,
@@ -11,8 +11,10 @@ const BurgerMenu = ({ onRoomClick }) => {
   });
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRoom, setSelectedRoom] = useState(null);
-  const { i18n } = useTranslation();
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
+  const [isRouteMode, setIsRouteMode] = useState(false);
+  const [routeFrom, setRouteFrom] = useState(null);
+  const [routeTo, setRouteTo] = useState(null);
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
@@ -35,13 +37,12 @@ const BurgerMenu = ({ onRoomClick }) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
-        !event.target.closest(".burger-menu") &&
-        !event.target.closest(".burger-toggle")
+          !event.target.closest(".burger-menu") &&
+          !event.target.closest(".burger-toggle")
       ) {
         setIsMenuOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -140,129 +141,115 @@ const BurgerMenu = ({ onRoomClick }) => {
       { id: "a73", name: t("rooms.auditorium.a73") },
     ],
   };
-
   const shouldOpenSection = (section) => {
     return rooms[section].some((room) => room.name.toLowerCase().includes(searchTerm));
   };
 
   useEffect(() => {
-    const updatedOpenSections = {
-      admin: false,
-      economic: false,
-      auditorium: false,
-    };
-
+    const updatedOpenSections = { admin: false, economic: false, auditorium: false };
     if (searchTerm) {
       Object.keys(rooms).forEach((section) => {
-        if (shouldOpenSection(section)) {
-          updatedOpenSections[section] = true;
-        }
+        if (shouldOpenSection(section)) updatedOpenSections[section] = true;
       });
     }
     setOpenSections(updatedOpenSections);
   }, [searchTerm]);
 
   return (
-    <div className="top-controls">
-      <button className="burger-toggle" onClick={toggleMenu} aria-label="Menu">
-      {isMenuOpen ? (
-        // Хрестик
-        <svg
-            className="burger-icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        >
-          <line x1="18" y1="6" x2="6" y2="18" />
-          <line x1="6" y1="6" x2="18" y2="18" />
-        </svg>
-      ) : (
-        // Три лінії (гамбургер)
-        <svg
-            className="burger-icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="18"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        >
-          <line x1="3" y1="6" x2="21" y2="6" />
-          <line x1="3" y1="12" x2="21" y2="12" />
-          <line x1="3" y1="18" x2="21" y2="18" />
-        </svg>
-      )}
-    </button>
-      {isMenuOpen && (
-        <div className="burger-menu">
-          <div className="language-switcher">
-    <button onClick={() => i18n.changeLanguage("ua")}>UA</button>
-    <button onClick={() => i18n.changeLanguage("en")}>EN</button>
-           </div>
-          <div className="search-wrapper">
-            <input
-              type="text"
-              placeholder={t("rooms.placeholder")}
-              className="search-input"
-              value={searchTerm}
-              onChange={handleSearchChange}
-            />
-            <button className="search-btn" aria-label="Search">
-  <svg
-    className="search-icon"
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="11" cy="11" r="8" />
-    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-  </svg>
-</button>
-          </div>
+      <div className="top-controls">
+        <button className="burger-toggle" onClick={toggleMenu} aria-label="Menu">
+          {isMenuOpen ? (
+              <svg className="burger-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none">
+                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+          ) : (
+              <svg className="burger-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" fill="none">
+                <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+          )}
+        </button>
 
-          {Object.keys(rooms).map((section) => (
-            <div className="menu-section" key={section}>
-              <button className="accordion-toggle" onClick={() => toggleSection(section)}>
-                {section === "admin"
-                  ? t('rooms.sections.admin')
-                  : section === "economic"
-                  ? t('rooms.sections.economic')
-                  : t('rooms.sections.auditorium')}
+        {isMenuOpen && (
+            <div className="burger-menu">
+              <div className="language-switcher">
+                <button onClick={() => i18n.changeLanguage("ua")}>UA</button>
+                <button onClick={() => i18n.changeLanguage("en")}>EN</button>
+              </div>
+              <button
+                  className="route-mode-btn"
+                  onClick={() => {
+                    setIsRouteMode(!isRouteMode);
+                    setRouteFrom(null);
+                    setRouteTo(null);
+
+                    onCreateRoute(null, null);
+
+                  }}
+              >
+                {isRouteMode ?  t("route.cancel") : t("route.create")}
               </button>
-              {openSections[section] && (
-                <div className="accordion-content">
-                  {rooms[section]
-                    .filter((room) => room.name.toLowerCase().includes(searchTerm))
-                    .map((room) => (
-                      <button
-                        key={room.id}
-                        className={`room-btn ${
-                          selectedRoom === room.id ? "selected" : ""
-                        }`}
-                        onClick={() => handleRoomClick(room.id)}>
-                        {room.name}
-                      </button>
-                    ))}
-                </div>
+              {isRouteMode && (
+                  <div className="route-info-text">
+                    <p className={routeFrom ? "point-filled" : "point-empty"}>
+                      {routeFrom ? `${t("route.from")}: ${routeFrom}` : t("route.chooseFrom")}
+                    </p>
+                    <p className={routeTo ? "point-filled" : "point-empty"}>
+                      {routeTo ? `${t("route.to")}: ${routeTo}` : t("route.chooseTo")}
+                    </p>
+                  </div>
               )}
+              <div className="search-wrapper">
+                <input type="text" placeholder={t("rooms.placeholder")} className="search-input" value={searchTerm}
+                       onChange={handleSearchChange}/>
+                <button className="search-btn" aria-label="Search">
+                  <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" strokeWidth="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                  </svg>
+                </button>
+              </div>
+
+              {Object.keys(rooms).map((section) => (
+                  <div className="menu-section" key={section}>
+                    <button className="accordion-toggle" onClick={() => toggleSection(section)}>
+                      {section === "admin" ? t('rooms.sections.admin') : section === "economic" ? t('rooms.sections.economic') : t('rooms.sections.auditorium')}
+                    </button>
+                    {openSections[section] && (
+                        <div className="accordion-content">
+                          {rooms[section]
+                              .filter((room) => room.name.toLowerCase().includes(searchTerm))
+                              .map((room) => (
+                                  <button key={room.id}
+                                          className={`room-btn ${selectedRoom === room.id ? "selected" : ""}`}
+                                          onClick={() => {
+
+                                            // ЗВИЧАЙНИЙ РЕЖИМ
+                                            if (!isRouteMode) {
+                                              handleRoomClick(room.id);
+                                              return;
+                                            }
+
+                                            // РЕЖИМ МАРШРУТУ
+                                            if (!routeFrom) {
+                                              setRouteFrom(room.id);
+                                            } else if (!routeTo) {
+                                              setRouteTo(room.id);
+
+                                              onCreateRoute(routeFrom, room.id);
+                                            }
+
+                                          }}>
+                                    {room.name}
+                                  </button>
+                              ))}
+                        </div>
+                    )}
+                  </div>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
-    </div>
+        )}
+      </div>
   );
 };
 

@@ -252,6 +252,57 @@
 }
 
 
+.route-mode-btn {
+  width: 100%;
+  background-color: #5a4e48;
+  color: #f6eeea;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  margin: 10px 0;
+  box-shadow: 0 2px 5px #111a6815;
+}
+
+.route-mode-btn:hover {
+  background-color: #ada7a4;
+  color: #5a4e48;
+}
+
+.route-info-text {
+  background: rgba(233, 220, 207, 0.6);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 5px #111a6810;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.point-empty {
+  margin: 0;
+  padding: 6px 8px;
+  font-size: 14px;
+  color: #3d2e20;
+  opacity: 0.6;
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 6px;
+}
+.point-filled {
+  margin: 0;
+  padding: 6px 8px;
+  font-size: 14px;
+  color: #3d2e20;
+  font-weight: 600;
+  background: #f6eeea;
+  border-radius: 6px;
+  border-left: 4px solid #5a4e48;
+}
+
 
 @media (min-width: 768px) and (max-width: 1024px) {
 
@@ -291,4 +342,5 @@
     width: 30px;
     height: 30px;
   }
+
 }

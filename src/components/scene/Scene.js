@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
 import InteractiveZone from "./InteractiveZone";
 import { useGLTF } from "@react-three/drei";
-import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
 import { useLoader } from "@react-three/fiber";
 import CameraControls from "./CameraControls";
 import "./Scene.css";
+import { bfs } from "../../navigation/pathfinding";
+import RoutePath from "../../navigation/RoutePath";
+
 
 const FloorModel1 = () => {
   const { t } = useTranslation();
@@ -17,7 +18,6 @@ const FloorModel1 = () => {
     const colorMap = useLoader(THREE.TextureLoader, "/textures/diffuse.jpg");
     const normalMap = useLoader(THREE.TextureLoader, "/textures/normal_gl.jpg");
     const roughnessMap = useLoader(THREE.TextureLoader, "/textures/rough.jpg");
-
     useEffect(() => {
         if (!scene) return;
 
@@ -87,13 +87,25 @@ const FloorModel2 = () => {
   return <primitive object={scene} scale={0.05} />;
 };
 
-const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange }) => {
+const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange, routeFrom, routeTo }) => {
   const [currentFloor, setCurrentFloor] = useState(activeFloor);
   const controlsRef = useRef();
+  const [route, setRoute] = useState(null);
   const { t } = useTranslation();
   useEffect(() => {
     setCurrentFloor(activeFloor);
   }, [activeFloor]);
+
+
+    useEffect(() => {
+
+        if (!routeFrom || !routeTo) {
+            setRoute(null);
+            return;
+        }
+        const path = bfs(routeFrom, routeTo);
+        setRoute(path);
+    }, [routeFrom, routeTo]);
 
   const renderInteractiveZones = () => {
     if (currentFloor === 1) {
@@ -908,16 +920,25 @@ const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange }) => {
           </div>
 
           <Canvas style={{height: "100vh"}}>
+
+
               <color attach="background" args={["#d1cbc3"]}/>
               <ambientLight intensity={0.5}/>
               <directionalLight position={[10, 10, 5]}/>
 
-              {currentFloor === 1 && <FloorModel1 />}
-              {currentFloor === 2 && <FloorModel2 />}
+              {currentFloor === 1 && <FloorModel1/>}
+              {currentFloor === 2 && <FloorModel2/>}
               {renderInteractiveZones()}
 
+              {route && route.map((node, index) => {
+                  if (index === route.length - 1) return null;
 
-              <CameraControls ref={controlsRef} />
+                  return (
+                      <RoutePath key={index} path={[route[index], route[index + 1]]}/>
+                  );
+              })}
+
+              <CameraControls ref={controlsRef}/>
           </Canvas>
           <div style={{
               position: "absolute",
