@@ -9,7 +9,7 @@ import CameraControls from "./CameraControls";
 import "./Scene.css";
 import { bfs } from "../../navigation/pathfinding";
 import RoutePath from "../../navigation/RoutePath";
-
+import { Html, Billboard } from "@react-three/drei";
 
 const FloorModel1 = () => {
   const { t } = useTranslation();
@@ -85,6 +85,30 @@ const FloorModel2 = () => {
   }
 
   return <primitive object={scene} scale={0.05} />;
+};
+
+const MapIconMarker = ({ position, iconUrl, label, onClick }) => {
+    return (
+        // Піднімаємо групу по осі Y, щоб гострий кінець маркера чітко вказував на точку підлоги
+        <group position={[position[0], position[1] + 0.2, position[2]]}>
+            <Billboard follow={true}>
+                <Html
+                    center
+                    distanceFactor={15} // Автоматичний красивий зум мітки
+                    style={{ pointerEvents: 'auto' }} // Щоб кліки по HTML спрацьовували
+                >
+                    <div className="modern-pin-container" onClick={onClick}>
+                        {/* Сама шпилька з іконкою */}
+                        <div className="modern-pin">
+                            <img src={iconUrl} alt={label} className="modern-pin-icon" />
+                        </div>
+                        {/* Текст під шпилькою */}
+                        <div className="modern-pin-label">{label}</div>
+                    </div>
+                </Html>
+            </Billboard>
+        </group>
+    );
 };
 
 const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange, routeFrom, routeTo }) => {
@@ -921,14 +945,30 @@ const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange, routeFro
 
           <Canvas style={{height: "100vh"}}>
 
-
               <color attach="background" args={["#d1cbc3"]}/>
               <ambientLight intensity={0.5}/>
               <directionalLight position={[10, 10, 5]}/>
 
+
               {currentFloor === 1 && <FloorModel1/>}
               {currentFloor === 2 && <FloorModel2/>}
               {renderInteractiveZones()}
+
+              {currentFloor === 1 && (
+                  <MapIconMarker
+                      position={[8, 0.7, 8.5]}
+                      iconUrl="/icon/exit.png"
+                      label="Головний вхід"
+                      onClick={() => console.log("clicked")}
+                  />
+              )}
+
+              {route?.map((p, i) =>
+                  i < route.length - 1 ? (
+                      <RoutePath key={i} path={[route[i], route[i + 1]]} />
+                  ) : null
+              )}
+
 
               {route && route.map((node, index) => {
                   if (index === route.length - 1) return null;
