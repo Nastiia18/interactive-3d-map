@@ -1,70 +1,165 @@
-
+/* ==========================================================================
+   1. Основна кнопка-перемикач поверхів (Segmented Control)
+   ========================================================================== */
 .button-container {
   position: fixed;
   top: 15px;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
-  gap: 12px;
   z-index: 1000;
+  display: flex;
+  background-color: #ffffff;
+  padding: 4px;
+  border-radius: 40px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  gap: 4px;
 }
 
 .floor-button {
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 0 20px;
-  font-size: 15px;
-  color: #f6eeea;
-  background-color: #5a4e48;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
+  height: 34px;
+  padding: 0 16px;
+  font-family: sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
   white-space: nowrap;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  transition: all 0.3s ease;
-}
-
-.floor-button:hover {
-  background-color: #ada7a4;
-  color: #5a4e48;
+  color: #7d6e65;
+  background-color: transparent;
+  border: none;
+  border-radius: 34px;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
 }
 
 .floor-button.active {
-    background-color: #f6eeea;
-  color: #5a4e48;
+  background-color: #26160d;
+  color: #ffffff;
+}
+
+.floor-button:not(.active):hover {
+  background-color: #f5f0ed;
+  color: #26160d;
+}
+
+/* ==========================================================================
+   2. Нові стилі для вертикальної капсули ЗУМУ (Як на фото з плюсом і мінусом)
+   ========================================================================== */
+.zoom-controls {
+  position: fixed;
+  left: 20px;          /* Позиція капсули на екрані (можна змінити на right, якщо треба) */
+  bottom: 45px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 14px; /* Округлені кути для всієї капсули */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden;    /* Ховає фони кнопок, щоб вони не вилазили за заокруглення */
 }
 
 .zoom-button {
-  width: 40px;
-  height: 40px;
-  background-color: #5a4e48;
-  color: #f6eeea;
-  border: none;
-  border-radius: 10px;
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  transition: all 0.2s ease;
-  line-height: 1;
+  font-family: sans-serif;
+  font-size: 22px;
+  font-weight: 300;    /* Тонкі акуратні знаки + та - */
+  color: #2c3e50;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Тонка лінія розмежування між плюсом і мінусом */
+.zoom-controls .zoom-button:first-child {
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .zoom-button:hover {
-  background-color: #ada7a4;
-  color: #5a4e48;
+  background-color: #f9f6f4;
 }
 
 .zoom-button:active {
-  transform: scale(0.95);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: #f0eae6;
 }
 
+/* ==========================================================================
+   3. Стилі для пінів (шпильок)
+   ========================================================================== */
+.three-js-html-container,
+[data-html-portal] {
+  z-index: 1 !important; /* Гарантує, що тривимірні HTML-тексти не піднімуться вище Canvas */
+}
+.modern-pin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modern-pin-container:hover {
+  transform: scale(1.1) translateY(-4px);
+}
+
+.modern-pin {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2), 0 0 0 2px #5a4e48;
+}
+
+.modern-pin::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
+  border-right: 2px solid #5a4e48;
+  border-bottom: 2px solid #5a4e48;
+  z-index: -1;
+}
+
+.modern-pin-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  filter: opacity(0.8) drop-shadow(0px 0px 0px #5a4e48);
+}
+
+.modern-pin-label {
+  margin-top: 8px;
+  background: rgba(90, 78, 72, 0.92);
+  color: #f6eeea;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   4. Адаптивність (Акуратні медіа-запити без каші всередині)
+   ========================================================================== */
+
+/* МОБІЛЬНІ ПРИСТРОЇ */
 @media (max-width: 768px) {
   .button-container {
     left: 85px;
@@ -80,48 +175,62 @@
     height: 32px;
     padding: 0 12px;
     font-size: 13px;
-    flex: none;
-    width: auto;
-    border-radius: 6px;
-    background-color: #5a4e48;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   }
+
   .zoom-controls {
     left: 15px;
-    bottom: 80px;
+    bottom: 40px; /* Трохи піднімаємо над краєм екрану смартфона */
   }
 
   .zoom-button {
-    width: 36px;
+    width: 36px;  /* Робимо компактнішими на мобільних */
     height: 36px;
-    font-size: 20px;
+    font-size: 18px;
   }
+
+  .accordion-toggle {
+    padding: 14px 4px;   /* Зберігаємо компактність на телефонах */
+    font-size: 13px;
+  }
+
+  .room-btn {
+    padding: 11px 14px;  /* Трохи більше місця для натискання пальцем на екрані */
+    font-size: 14px;
+  }
+
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
-
+/* ПЛАНШЕТИ */
+@media (min-width: 769px) and (max-width: 1024px) {
   .button-container {
     top: 18px;
     gap: 10px;
   }
 
   .floor-button {
-    height: 46px;
-    padding: 0 26px;
-    font-size: 20px;
-    border-radius: 10px;
+    height: 38px;
+    padding: 0 20px;
+    font-size: 14px;
   }
 
   .zoom-controls {
     left: 15px;
-    bottom: 70px;
-    gap: 8px;
+    bottom: 40px;
   }
 
   .zoom-button {
-    width: 42px;
-    height: 42px;
-    font-size: 22px;
-    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .accordion-toggle {
+    font-size: 14px;     /* На планшетах робимо лише крапельку більшим, не 20px! */
+    padding: 16px 4px;
+  }
+
+  .room-btn {
+    font-size: 15px;
+    padding: 12px 16px;
   }
 }

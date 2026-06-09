@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
 import InteractiveZone from "./InteractiveZone";
 import { useGLTF } from "@react-three/drei";
-import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
 import { useLoader } from "@react-three/fiber";
 import CameraControls from "./CameraControls";
 import "./Scene.css";
+import { bfs } from "../../navigation/pathfinding";
+import RoutePath from "../../navigation/RoutePath";
+import { Html, Billboard } from "@react-three/drei";
 
 const FloorModel1 = () => {
   const { t } = useTranslation();
   const { scene, error, isLoading } = useGLTF("../models/floor1.glb");
 
-    const colorMap = useLoader(THREE.TextureLoader, "/textures/diffuse.jpg");
-    const normalMap = useLoader(THREE.TextureLoader, "/textures/normal_gl.jpg");
-    const roughnessMap = useLoader(THREE.TextureLoader, "/textures/rough.jpg");
-
+    const colorMap = useLoader(THREE.TextureLoader, "/textures/d2.jpg");
+    const normalMap = useLoader(THREE.TextureLoader, "/textures/n2.jpg");
+    const roughnessMap = useLoader(THREE.TextureLoader, "/textures/r2.jpg");
     useEffect(() => {
         if (!scene) return;
 
@@ -87,13 +87,47 @@ const FloorModel2 = () => {
   return <primitive object={scene} scale={0.05} />;
 };
 
-const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange }) => {
+const MapIconMarker = ({ position, iconUrl, label, onClick }) => {
+    return (
+        <group position={[position[0], position[1] + 0.2, position[2]]}>
+            <Billboard follow={true}>
+                <Html
+                    center
+                    distanceFactor={15}
+                    style={{ pointerEvents: 'auto',
+                        zIndex: 1 }}
+                >
+                    <div className="modern-pin-container" onClick={onClick}>
+                        <div className="modern-pin">
+                            <img src={iconUrl} alt={label} className="modern-pin-icon" />
+                        </div>
+                        <div className="modern-pin-label">{label}</div>
+                    </div>
+                </Html>
+            </Billboard>
+        </group>
+    );
+};
+
+const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange, routeFrom, routeTo }) => {
   const [currentFloor, setCurrentFloor] = useState(activeFloor);
   const controlsRef = useRef();
+  const [route, setRoute] = useState(null);
   const { t } = useTranslation();
   useEffect(() => {
     setCurrentFloor(activeFloor);
   }, [activeFloor]);
+
+
+    useEffect(() => {
+
+        if (!routeFrom || !routeTo) {
+            setRoute(null);
+            return;
+        }
+        const path = bfs(routeFrom, routeTo);
+        setRoute(path);
+    }, [routeFrom, routeTo]);
 
   const renderInteractiveZones = () => {
     if (currentFloor === 1) {
@@ -377,8 +411,8 @@ const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange }) => {
             modelPath="../models/kIEl.glb"
             position={[0, 0, 0]}
             color="#e88d33"
-            onClick={() => setActiveRoom("kIEl")}
-            isActive={activeRoom === "kIEl"}
+            onClick={() => setActiveRoom("kIEI")}
+            isActive={activeRoom === "kIEI"}
           />
           <InteractiveZone
             modelPath="../models/kKryvytska.glb"
@@ -536,8 +570,8 @@ const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange }) => {
             modelPath="../models/a10.glb"
             position={[0, 0, 0]}
             color="#e88d33"
-            onClick={() => setActiveRoom("b1")}
-            isActive={activeRoom === "b1"}
+            onClick={() => setActiveRoom("a10")}
+            isActive={activeRoom === "a10"}
           />
           <InteractiveZone
             modelPath="../models/a11.glb"
@@ -889,6 +923,7 @@ const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange }) => {
     const zoomOut = () => {
         if (controlsRef.current) {
             controlsRef.current.dollyOut(1.2);
+            controlsRef.current.dollyOut(1.2);
             controlsRef.current.update();
         }
     };
@@ -907,17 +942,119 @@ const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange }) => {
               </button>
           </div>
 
-          <Canvas style={{height: "100vh"}}>
-              <color attach="background" args={["#d1cbc3"]}/>
+          <Canvas style={{ height: "100vh", position: "relative", zIndex: 1 }}>
+
+              <color attach="background" args={["#e3d7c9"]}/>
               <ambientLight intensity={0.5}/>
               <directionalLight position={[10, 10, 5]}/>
 
-              {currentFloor === 1 && <FloorModel1 />}
-              {currentFloor === 2 && <FloorModel2 />}
+
+              {currentFloor === 1 && <FloorModel1/>}
+              {currentFloor === 2 && <FloorModel2/>}
               {renderInteractiveZones()}
 
+              {currentFloor === 1 && (
+                  <>
+                  <MapIconMarker
+                      position={[8, 0.7, 8.5]}
+                      iconUrl="/icon/exit.png"
+                      label="Головний вхід"
+                      onClick={() => console.log("clicked")}
+                  />
 
-              <CameraControls ref={controlsRef} />
+                  <MapIconMarker
+                  position={[10.5, 0.7, 2]}
+                  iconUrl="/icon/exit.png"
+                  label="Вхід"
+                  onClick={() => console.log("entrance")}
+                  />
+                      <MapIconMarker
+                          position={[2, 0.7, 6]}
+                          iconUrl="/icon/exit.png"
+                          label="Вхід"
+                          onClick={() => console.log("entrance")}
+                      />
+                      <MapIconMarker
+                          position={[-4, 0.7, 6.5]}
+                          iconUrl="/icon/exit.png"
+                          label="Вхід"
+                          onClick={() => console.log("entrance")}
+                      />
+                      <MapIconMarker
+                          position={[13.2, 0.7, -16.5]}
+                          iconUrl="/icon/exit.png"
+                          label="Вхід"
+                          onClick={() => console.log("entrance")}
+                      />
+                      <MapIconMarker
+                          position={[9, 0.7, -18.5]}
+                          iconUrl="/icon/exit.png"
+                          label="Вхід"
+                          onClick={() => console.log("entrance")}
+                      />
+                </>
+              )}
+
+              {currentFloor === 2 && (
+                  <>
+                      <MapIconMarker
+                          position={[10.5, 0.9, 13]}
+                          iconUrl="/icon/stairs.png"
+                          label="Сходи"
+                          onClick={() => console.log("stairs")}
+                      />
+
+                      <MapIconMarker
+                          position={[7, 0.9, 5]}
+                          iconUrl="/icon/stairs.png"
+                          label="Сходи"
+                          onClick={() => console.log("stairs")}
+                      />
+                      <MapIconMarker
+                          position={[12.5, 0.9, 0]}
+                          iconUrl="/icon/stairs.png"
+                          label="Сходи"
+                          onClick={() => console.log("stairs")}
+                      />
+
+                      <MapIconMarker
+                          position={[12.5, 0.9, -7]}
+                          iconUrl="/icon/stairs.png"
+                          label="Сходи"
+                          onClick={() => console.log("stairs")}
+                      />
+                      <MapIconMarker
+                          position={[10.2, 0.9, -13.5]}
+                          iconUrl="/icon/stairs.png"
+                          label="Сходи"
+                          onClick={() => console.log("stairs")}
+                      />
+
+                      <MapIconMarker
+                          position={[10.5, 0.9, -19]}
+                          iconUrl="/icon/stairs.png"
+                          label="Сходи"
+                          onClick={() => console.log("stairs")}
+                      />
+                  </>
+              )}
+
+              {route?.map((p, i) =>
+                  i < route.length - 1 ? (
+                      <RoutePath key={i} path={[route[i], route[i + 1]]} />
+                  ) : null
+              )}
+
+
+              {route && route.map((node, index) => {
+                  if (index === route.length - 1) return null;
+
+                  return (
+                      <RoutePath key={index} path={[route[index], route[index + 1]]}/>
+                  );
+              })}
+
+              <CameraControls ref={controlsRef}/>
           </Canvas>
           <div style={{
               position: "absolute",

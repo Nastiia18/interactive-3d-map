@@ -325,7 +325,7 @@ const Sidebar = ({ room, closeSidebar }) => {
       image: "../images/a7.jpg",
       text: "",
     },
-    a7а: {
+    a7a: {
       title: t("rooms.auditorium.a7a"),
       image: "",
       text: "",
@@ -490,6 +490,76 @@ const Sidebar = ({ room, closeSidebar }) => {
       image: "",
       text: "",
     },
+    a74: {
+      title: t("rooms.auditorium.a74"),
+      image: "",
+      text: "",
+    },
+    kf: {
+      title: t("rooms.auditorium.kf"),
+      image: "",
+      text: "",
+    },
+    p4: {
+      title: t("rooms.auditorium.p4"),
+      image: "",
+      text: "",
+    },
+    hall: {
+      title: t("rooms.auditorium.hall"),
+      image: "",
+      text: "",
+    },
+    loft: {
+      title: t("rooms.auditorium.loft"),
+      image: "",
+      text: "",
+    },
+    skladtzn: {
+      title: t("rooms.auditorium.skladtzn"),
+      image: "",
+      text: "",
+    },
+    tzn: {
+      title: t("rooms.auditorium.tzn"),
+      image: "",
+      text: "",
+    },
+    kpolit: {
+      title: t("rooms.auditorium.kpolit"),
+      image: "",
+      text: "",
+    },
+    kreligions: {
+      title: t("rooms.auditorium.kreligions"),
+      image: "",
+      text: "",
+    },
+    careercounselor: {
+      title: t("rooms.auditorium.careercounselor"),
+      image: "",
+      text: "",
+    },
+    p3: {
+      title: t("rooms.auditorium.p3"),
+      image: "",
+      text: "",
+    },
+    idzdn: {
+      title: t("rooms.auditorium.idzdn"),
+      image: "",
+      text: "",
+    },
+    khistory: {
+      title: t("rooms.auditorium.khistory"),
+      image: "",
+      text: "",
+    },kinternationalrelations: {
+      title: t("rooms.auditorium.kinternationalrelations"),
+      image: "",
+      text: "",
+    },
+
   };
 
    const { title, image, text } = roomInfo[room] || {};
@@ -505,10 +575,11 @@ const Sidebar = ({ room, closeSidebar }) => {
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
-      d="M18 6L6 18M6 6L18 18"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
+        d="M18 6L6 18M6 6L18 18"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
     />
   </svg>
 </button>
