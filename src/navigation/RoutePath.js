@@ -9,7 +9,7 @@ const RoutePath = ({ path }) => {
         (node) => new THREE.Vector3(...navigationNodes[node])
     );
 
-    return <Line points={points} color="red" lineWidth={4} />;
+    return <Line points={points} color= '#26160d' lineWidth={4} />;
 };
 
 export default RoutePath;

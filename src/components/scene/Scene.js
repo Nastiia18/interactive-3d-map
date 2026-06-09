@@ -15,9 +15,9 @@ const FloorModel1 = () => {
   const { t } = useTranslation();
   const { scene, error, isLoading } = useGLTF("../models/floor1.glb");
 
-    const colorMap = useLoader(THREE.TextureLoader, "/textures/diffuse.jpg");
-    const normalMap = useLoader(THREE.TextureLoader, "/textures/normal_gl.jpg");
-    const roughnessMap = useLoader(THREE.TextureLoader, "/textures/rough.jpg");
+    const colorMap = useLoader(THREE.TextureLoader, "/textures/d2.jpg");
+    const normalMap = useLoader(THREE.TextureLoader, "/textures/n2.jpg");
+    const roughnessMap = useLoader(THREE.TextureLoader, "/textures/r2.jpg");
     useEffect(() => {
         if (!scene) return;
 
@@ -89,20 +89,18 @@ const FloorModel2 = () => {
 
 const MapIconMarker = ({ position, iconUrl, label, onClick }) => {
     return (
-        // Піднімаємо групу по осі Y, щоб гострий кінець маркера чітко вказував на точку підлоги
         <group position={[position[0], position[1] + 0.2, position[2]]}>
             <Billboard follow={true}>
                 <Html
                     center
-                    distanceFactor={15} // Автоматичний красивий зум мітки
-                    style={{ pointerEvents: 'auto' }} // Щоб кліки по HTML спрацьовували
+                    distanceFactor={15}
+                    style={{ pointerEvents: 'auto',
+                        zIndex: 1 }}
                 >
                     <div className="modern-pin-container" onClick={onClick}>
-                        {/* Сама шпилька з іконкою */}
                         <div className="modern-pin">
                             <img src={iconUrl} alt={label} className="modern-pin-icon" />
                         </div>
-                        {/* Текст під шпилькою */}
                         <div className="modern-pin-label">{label}</div>
                     </div>
                 </Html>
@@ -413,8 +411,8 @@ const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange, routeFro
             modelPath="../models/kIEl.glb"
             position={[0, 0, 0]}
             color="#e88d33"
-            onClick={() => setActiveRoom("kIEl")}
-            isActive={activeRoom === "kIEl"}
+            onClick={() => setActiveRoom("kIEI")}
+            isActive={activeRoom === "kIEI"}
           />
           <InteractiveZone
             modelPath="../models/kKryvytska.glb"
@@ -572,8 +570,8 @@ const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange, routeFro
             modelPath="../models/a10.glb"
             position={[0, 0, 0]}
             color="#e88d33"
-            onClick={() => setActiveRoom("b1")}
-            isActive={activeRoom === "b1"}
+            onClick={() => setActiveRoom("a10")}
+            isActive={activeRoom === "a10"}
           />
           <InteractiveZone
             modelPath="../models/a11.glb"
@@ -925,6 +923,7 @@ const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange, routeFro
     const zoomOut = () => {
         if (controlsRef.current) {
             controlsRef.current.dollyOut(1.2);
+            controlsRef.current.dollyOut(1.2);
             controlsRef.current.update();
         }
     };
@@ -943,9 +942,9 @@ const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange, routeFro
               </button>
           </div>
 
-          <Canvas style={{height: "100vh"}}>
+          <Canvas style={{ height: "100vh", position: "relative", zIndex: 1 }}>
 
-              <color attach="background" args={["#d1cbc3"]}/>
+              <color attach="background" args={["#e3d7c9"]}/>
               <ambientLight intensity={0.5}/>
               <directionalLight position={[10, 10, 5]}/>
 
@@ -955,12 +954,89 @@ const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange, routeFro
               {renderInteractiveZones()}
 
               {currentFloor === 1 && (
+                  <>
                   <MapIconMarker
                       position={[8, 0.7, 8.5]}
                       iconUrl="/icon/exit.png"
                       label="Головний вхід"
                       onClick={() => console.log("clicked")}
                   />
+
+                  <MapIconMarker
+                  position={[10.5, 0.7, 2]}
+                  iconUrl="/icon/exit.png"
+                  label="Вхід"
+                  onClick={() => console.log("entrance")}
+                  />
+                      <MapIconMarker
+                          position={[2, 0.7, 6]}
+                          iconUrl="/icon/exit.png"
+                          label="Вхід"
+                          onClick={() => console.log("entrance")}
+                      />
+                      <MapIconMarker
+                          position={[-4, 0.7, 6.5]}
+                          iconUrl="/icon/exit.png"
+                          label="Вхід"
+                          onClick={() => console.log("entrance")}
+                      />
+                      <MapIconMarker
+                          position={[13.2, 0.7, -16.5]}
+                          iconUrl="/icon/exit.png"
+                          label="Вхід"
+                          onClick={() => console.log("entrance")}
+                      />
+                      <MapIconMarker
+                          position={[9, 0.7, -18.5]}
+                          iconUrl="/icon/exit.png"
+                          label="Вхід"
+                          onClick={() => console.log("entrance")}
+                      />
+                </>
+              )}
+
+              {currentFloor === 2 && (
+                  <>
+                      <MapIconMarker
+                          position={[10.5, 0.9, 13]}
+                          iconUrl="/icon/stairs.png"
+                          label="Сходи"
+                          onClick={() => console.log("stairs")}
+                      />
+
+                      <MapIconMarker
+                          position={[7, 0.9, 5]}
+                          iconUrl="/icon/stairs.png"
+                          label="Сходи"
+                          onClick={() => console.log("stairs")}
+                      />
+                      <MapIconMarker
+                          position={[12.5, 0.9, 0]}
+                          iconUrl="/icon/stairs.png"
+                          label="Сходи"
+                          onClick={() => console.log("stairs")}
+                      />
+
+                      <MapIconMarker
+                          position={[12.5, 0.9, -7]}
+                          iconUrl="/icon/stairs.png"
+                          label="Сходи"
+                          onClick={() => console.log("stairs")}
+                      />
+                      <MapIconMarker
+                          position={[10.2, 0.9, -13.5]}
+                          iconUrl="/icon/stairs.png"
+                          label="Сходи"
+                          onClick={() => console.log("stairs")}
+                      />
+
+                      <MapIconMarker
+                          position={[10.5, 0.9, -19]}
+                          iconUrl="/icon/stairs.png"
+                          label="Сходи"
+                          onClick={() => console.log("stairs")}
+                      />
+                  </>
               )}
 
               {route?.map((p, i) =>

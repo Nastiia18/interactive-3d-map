@@ -69,6 +69,7 @@ const BurgerMenu = ({ onRoomClick, onCreateRoute }) => {
       { id: "a6", name: t("rooms.auditorium.a6") },
       { id: "a8", name: t("rooms.auditorium.a8") },
       { id: "a8a", name: t("rooms.auditorium.a8a") },
+      { id: "a10", name: t("rooms.auditorium.a10") },
       { id: "a15", name: t("rooms.auditorium.a15") },
       { id: "a16", name: t("rooms.auditorium.a16") },
       { id: "a17", name: t("rooms.auditorium.a17") },
@@ -106,7 +107,7 @@ const BurgerMenu = ({ onRoomClick, onCreateRoute }) => {
       { id: "oldprints(2)", name: t("rooms.auditorium.oldprints2") },
       { id: "p1", name: t("rooms.auditorium.p1") },
       { id: "p2", name: t("rooms.auditorium.p2") },
-      { id: "p5", name: t("rooms.auditorium.p5") },
+      { id: "p3", name: t("rooms.auditorium.p3") },
       { id: "studentdepartment", name: t("rooms.auditorium.studentdepartment") },
       { id: "trainingclass", name: t("rooms.auditorium.trainingclass") },
       { id: "a7", name: t("rooms.auditorium.a7") },
@@ -139,8 +140,22 @@ const BurgerMenu = ({ onRoomClick, onCreateRoute }) => {
       { id: "a71", name: t("rooms.auditorium.a71") },
       { id: "a72", name: t("rooms.auditorium.a72") },
       { id: "a73", name: t("rooms.auditorium.a73") },
+      { id: "a74", name: t("rooms.auditorium.a74") },
+      { id: "kf", name: t("rooms.auditorium.kf") },
+      { id: "p4", name: t("rooms.auditorium.p4") },
+      { id: "hall", name: t("rooms.auditorium.hall") },
+      { id: "loft", name: t("rooms.auditorium.loft") },
+      { id: "skladtzn", name: t("rooms.auditorium.skladtzn") },
+      { id: "tzn", name: t("rooms.auditorium.tzn") },
+      { id: "kpolit", name: t("rooms.auditorium.kpolit") },
+      { id: "kreligions", name: t("rooms.auditorium.kreligions") },
+      { id: "careercounselor", name: t("rooms.auditorium.careercounselor") },
+      { id: "idzdn", name: t("rooms.auditorium.idzdn") },
+      { id: "khistory", name: t("rooms.auditorium.khistory") },
+      { id: "kinternationalrelations", name: t("rooms.auditorium.kinternationalrelations") },
     ],
   };
+  const allRooms = Object.values(rooms).flat();
   const shouldOpenSection = (section) => {
     return rooms[section].some((room) => room.name.toLowerCase().includes(searchTerm));
   };
@@ -172,81 +187,134 @@ const BurgerMenu = ({ onRoomClick, onCreateRoute }) => {
         {isMenuOpen && (
             <div className="burger-menu">
               <div className="language-switcher">
-                <button onClick={() => i18n.changeLanguage("ua")}>UA</button>
-                <button onClick={() => i18n.changeLanguage("en")}>EN</button>
-              </div>
-              <button
-                  className="route-mode-btn"
-                  onClick={() => {
-                    setIsRouteMode(!isRouteMode);
-                    setRouteFrom(null);
-                    setRouteTo(null);
-
-                    onCreateRoute(null, null);
-
-                  }}
-              >
-                {isRouteMode ?  t("route.cancel") : t("route.create")}
-              </button>
-              {isRouteMode && (
-                  <div className="route-info-text">
-                    <p className={routeFrom ? "point-filled" : "point-empty"}>
-                      {routeFrom ? `${t("route.from")}: ${routeFrom}` : t("route.chooseFrom")}
-                    </p>
-                    <p className={routeTo ? "point-filled" : "point-empty"}>
-                      {routeTo ? `${t("route.to")}: ${routeTo}` : t("route.chooseTo")}
-                    </p>
-                  </div>
-              )}
-              <div className="search-wrapper">
-                <input type="text" placeholder={t("rooms.placeholder")} className="search-input" value={searchTerm}
-                       onChange={handleSearchChange}/>
-                <button className="search-btn" aria-label="Search">
-                  <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" strokeWidth="2">
-                    <circle cx="11" cy="11" r="8"/>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                  </svg>
+                <button
+                    className={i18n.language === "ua" ? "active" : ""}
+                    onClick={() => i18n.changeLanguage("ua")}
+                >
+                  UA
+                </button>
+                <button
+                    className={i18n.language === "en" ? "active" : ""}
+                    onClick={() => i18n.changeLanguage("en")}
+                >
+                  EN
                 </button>
               </div>
 
-              {Object.keys(rooms).map((section) => (
-                  <div className="menu-section" key={section}>
-                    <button className="accordion-toggle" onClick={() => toggleSection(section)}>
-                      {section === "admin" ? t('rooms.sections.admin') : section === "economic" ? t('rooms.sections.economic') : t('rooms.sections.auditorium')}
-                    </button>
-                    {openSections[section] && (
-                        <div className="accordion-content">
-                          {rooms[section]
-                              .filter((room) => room.name.toLowerCase().includes(searchTerm))
-                              .map((room) => (
-                                  <button key={room.id}
-                                          className={`room-btn ${selectedRoom === room.id ? "selected" : ""}`}
-                                          onClick={() => {
+              {!isRouteMode && (
+                  <button
+                      className="route-mode-btn"
+                      onClick={() => {
+                        setIsRouteMode(true);
+                        setRouteFrom(null);
+                        setRouteTo(null);
+                        onCreateRoute(null, null);
+                      }}
+                  >
+                    {t("route.create")}
+                  </button>
+              )}
 
-                                            // ЗВИЧАЙНИЙ РЕЖИМ
-                                            if (!isRouteMode) {
-                                              handleRoomClick(room.id);
-                                              return;
-                                            }
+              {isRouteMode && (
+                  <div className="modern-route-card">
+                    <div className="route-timeline-wrapper">
+                      <div className="route-visual-line">
+                        <div className="circle-from"></div>
+                        <div className="connecting-line"></div>
+                        <div className="circle-to"></div>
+                      </div>
 
-                                            // РЕЖИМ МАРШРУТУ
-                                            if (!routeFrom) {
-                                              setRouteFrom(room.id);
-                                            } else if (!routeTo) {
-                                              setRouteTo(room.id);
-
-                                              onCreateRoute(routeFrom, room.id);
-                                            }
-
-                                          }}>
-                                    {room.name}
-                                  </button>
-                              ))}
+                      <div className="route-text-fields">
+                        <div className="route-field-group">
+                          <span className="field-label">{t("route.from")}</span>
+                          <p className={routeFrom ? "point-filled" : "point-empty"}>
+                            {routeFrom ? allRooms.find(r => r.id === routeFrom)?.name || routeFrom : t("route.chooseFrom")}
+                          </p>
                         </div>
-                    )}
+
+                        <div className="route-field-group">
+                          <span className="field-label">{t("route.to")}</span>
+                          <p className={routeTo ? "point-filled" : "point-empty"}>
+                            {routeTo ? allRooms.find(r => r.id === routeTo)?.name || routeTo : t("route.chooseTo")}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                        className="modern-cancel-route-btn"
+                        onClick={() => {
+                          setIsRouteMode(false);
+                          setRouteFrom(null);
+                          setRouteTo(null);
+                          onCreateRoute(null, null);
+                        }}
+                    >
+                      {t("route.cancel")}
+                    </button>
                   </div>
-              ))}
+              )}
+
+
+              <div className="search-wrapper">
+              <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" strokeWidth="2.5">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+
+                <input
+                    type="text"
+                    placeholder={t("rooms.placeholder")}
+                    className="search-input"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                />
+              </div>
+
+              {Object.keys(rooms).map((section) => {
+                const isOpen = openSections[section];
+                return (
+                    <div className="menu-section" key={section}>
+                      {/* Кнопка категорії тепер має динамічний клас active, якщо вона відкрита */}
+                      <button className={`accordion-toggle ${isOpen ? "active" : ""}`} onClick={() => toggleSection(section)}>
+        <span>
+          {section === "admin" ? t('rooms.sections.admin') : section === "economic" ? t('rooms.sections.economic') : t('rooms.sections.auditorium')}
+        </span>
+
+                        {/* Акуратна маленька стрілочка праворуч */}
+                        <svg className="accordion-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          {isOpen ? <polyline points="6 9 12 15 18 9" /> : <polyline points="9 18 15 12 9 6" />}
+                        </svg>
+                      </button>
+
+                      {openSections[section] && (
+                          <div className="accordion-content">
+                            {rooms[section]
+                                .filter((room) => room.name.toLowerCase().includes(searchTerm))
+                                .map((room) => (
+                                    <button key={room.id}
+                                            className={`room-btn ${selectedRoom === room.id ? "selected" : ""}`}
+                                            onClick={() => {
+                                              if (!isRouteMode) {
+                                                handleRoomClick(room.id);
+                                                return;
+                                              }
+                                              if (!routeFrom) {
+                                                setRouteFrom(room.id);
+                                              } else if (!routeTo) {
+                                                setRouteTo(room.id);
+                                                onCreateRoute(routeFrom, room.id);
+                                              }
+                                            }}>
+                                      {room.name}
+                                    </button>
+                                ))}
+                          </div>
+                      )}
+                    </div>
+                );
+              })}
             </div>
         )}
       </div>

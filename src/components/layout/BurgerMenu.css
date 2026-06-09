@@ -1,22 +1,48 @@
 .burger-toggle {
-  background-color: #5a4e48;
-  color: #f6eeea;
-  padding: 8px 16px;
+  width: 40px;                /* Робимо кнопку ідеально квадратною */
+  height: 40px;
+  background-color: #ffffff;  /* Чистий білий фон */
   border: none;
+  border-radius: 12px;        /* Елегантні округлі кути */
   cursor: pointer;
-  font-size: 16px;
   z-index: 2100;
-  border-radius: 10px;
-  transition: background-color 0.3s ease;
+
+  /* Центруємо SVG-іконку всередині кнопки */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;                 /* Прибираємо старі текстові паддінги */
+
+  /* Додаємо м'яку тінь, як на фото */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease-in-out;
 }
 
-.burger-toggle:hover {
-  background-color: #ada7a4;
-  color: #5a4e48;
+/* Стиль самої іконки всередині кнопки (лінії) */
+.burger-icon {
+  width: 18px;                /* Робимо іконку компактною та акуратною */
+  height: 18px;
+  color: #2c3e50;             /* Глибокий темний колір ліній замість білого */
+  transition: color 0.2s ease;
 }
+
+/* Ефекти при наведенні та активності (натисканні) */
+.burger-toggle:hover {
+  background-color: #fcfaf8;  /* Легкий приємний відтінок при наведенні */
+}
+
+.burger-toggle:hover .burger-icon {
+  color: #1a252f;             /* Лінії стають трішки темнішими */
+}
+
+.burger-toggle:active {
+  transform: scale(0.95);     /* Ефект легкого фізичного натискання */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
 
 .burger-menu {
-  width: 250px;
+  width: 300px;
   background: rgba(246, 238, 234, 0.8);
   color: #3d2e20;
    padding: 80px 15px 15px 15px;
@@ -97,74 +123,130 @@
 .search-wrapper {
   display: flex;
   align-items: center;
-  background-color: #e9dccf;
-  border-radius: 25px;
-  padding: 5px 10px;
-  margin: 10px 0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #f3ede8;
+  border-radius: 30px;
+  padding: 0 16px;
+  margin: 15px 0;
+  height: 40px;
+  box-shadow: none;
+  transition: all 0.2s ease;
 }
+
+search-wrapper:focus-within {
+  background-color: #ebe3dc;
+}
+
+/* Сама іконка лупи */
+.search-icon {
+  width: 16px;
+  height: 16px;
+  color: #7d6e65;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
 
 .search-input {
+  flex-grow: 1;
   border: none;
   outline: none;
-  padding: 10px;
+  background: transparent;
+  padding: 0;
+  height: 100%;
+  font-family: sans-serif;
   font-size: 14px;
-  border-radius: 20px;
-  width: 200px;
-  background-color: #f6eeea;
+  font-weight: 500;
+  color: #26160d;
 }
 
-.search-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.search-btn:hover .search-icon {
-  color: #5a4e48;
-}
-
-.search-icon {
-  width: 18px;
-  height: 18px;
-  color: #4A4458;
+.search-input::placeholder {
+  color: #a0928a;            /* Колір для тексту "Пошук аудиторії..." */
+  opacity: 1;
 }
 
 .menu-section {
-  margin-bottom: 10px;
-}
-
-.accordion-toggle {
-  background-color: #e9dccf;
-  padding: 10px;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
   margin-bottom: 5px;
 }
 
-.accordion-content {
-  padding-left: 20px;
+/* Кнопка категорії (Адміністрація, Аудиторії тощо) */
+.accordion-toggle {
+  width: 100%;
+  background: transparent;    /* ПОВНІСТЮ ПРИБИРАЄМО БЕЖЕВИЙ ФОН */
+  border: none;
+  border-radius: 0;
+  padding: 14px 4px;          /* Відступи, щоб зручно було натискати */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Текст ліворуч, стрілочка праворуч */
+  cursor: pointer;
+  outline: none;
+
+  /* Стиль тексту строго за зразком */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;            /* Компактний розмір */
+  font-weight: 800;            /* Жирні літери */
+  color: #26160d;             /* Глибокий фірмовий колір */
+  text-transform: uppercase;  /* ПРИМУСОВИЙ КАПСЛОК (ВЕЛИКІ ЛІТЕРИ) */
+  letter-spacing: 0.6px;      /* Невеликий благородний проміжок між літерами */
+  transition: opacity 0.2s ease;
 }
 
+.accordion-toggle:hover {
+  background: transparent;    /* Ніякого сірого чи темного фону при наведенні */
+  opacity: 0.8;               /* Легке елегантне згасання */
+}
+
+/* Стиль стрілочки */
+.accordion-arrow {
+  color: #7d6e65;             /* Коричневий колір стрілочки */
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* Коли категорія відкрита, стрілочка міняє колір на бежевий/рудий, як на зразку */
+.accordion-toggle.active .accordion-arrow {
+  color: #d19f7b;
+}
+
+/* Контейнер під кожною категорією, де лежать кімнати */
+.accordion-content {
+  padding: 4px 0 10px 0;      /* Прибираємо ліві паддінги, щоб кнопки займали всю ширину */
+  display: flex;
+  flex-direction: column;
+  gap: 2px;                   /* Невеликий проміжок між кнопками кабінетів */
+}
+
+/* Звичайна неактивна кнопка кабінету всередині списку */
 .room-btn {
-  padding: 10px;
+  width: 100%;
   background: transparent;
   border: none;
+  padding: 10px 16px;         /* Зручний відступ для пальця */
   text-align: left;
-  width: 100%;
   cursor: pointer;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #5a4e48;             /* Приглушений колір тексту для неактивного кабінету */
+  border-radius: 12px;        /* Округлюємо кути плашки */
+  transition: all 0.2s ease;
 }
 
-.room-btn.selected {
-  background-color: #ada7a4;
+.room-btn:hover {
+  background-color: #faf7f5;  /* Дуже легке підсвічування при наведенні */
+  color: #26160d;
 }
+
+/* АКТИВНА ОБРАНА КІМНАТА (як Аудиторія №17 на фото 2) */
+.room-btn.selected {
+  background-color: #fcf6f0;  /* М'яка крем-плашка */
+  color: #26160d;             /* Контрастний темний текст */
+  font-weight: 700;           /* Робимо назву чіткішою */
+
+  /* Створюємо ту саму тонку вертикальну лінію ліворуч плашки */
+  box-shadow: inset 3px 0 0 0 #cf946d;
+}
+
 
 .top-controls {
   position: absolute;
@@ -175,31 +257,46 @@
   gap: 10px;
   z-index: 1001;
 }
+
 .language-switcher {
   position: fixed;
   top: 30px;
   right: 20px;
+  z-index: 2001;
   display: flex;
-  gap: 8px;
-  margin-bottom: 15px;
-  justify-content: flex-start;
+  background-color: #f3ede8;
+  padding: 3px;
+  border-radius: 30px;
+  gap: 2px;
 }
 
 .language-switcher button {
-  background-color: #f6eeea;
-  border: 1px solid #5a4e48;
-  color: #3d2e20;
-  padding: 4px 10px;
-  border-radius: 6px;
-  cursor: pointer;
+  height: 28px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
   font-size: 13px;
-  transition: 0.2s;
+  font-weight: 700;
+  color: #7d6e65;
+  background-color: transparent;
+  border: none;
+  border-radius: 26px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
-.language-switcher button:hover {
-  background-color: #5a4e48;
-  color: #f6eeea;
+.language-switcher button.active {
+  background-color: #ffffff;
+  color: #26160d; /* Темний колір тексту */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
+
+.language-switcher button:not(.active):hover {
+  color: #26160d;
+}
+
 @media (max-width: 767px) {
   .burger-menu {
     width: 100%;
@@ -218,11 +315,19 @@
   }
 
   .language-switcher {
-  position: absolute;
+    position: absolute;
     top: 25px;
     right: 15px;
     z-index: 2001;
     margin-bottom: 0;
+    background-color: #f3ede8;
+    padding: 3px;
+    border-radius: 30px;
+  }
+  .language-switcher button {
+    height: 30px;
+    padding: 0 12px;
+    font-size: 12px;
   }
 
   .search-wrapper {
@@ -251,37 +356,151 @@
   }
 }
 
-
+/* Кнопка "Додати маршрут" у початковому стані меню */
 .route-mode-btn {
   width: 100%;
-  background-color: #5a4e48;
-  color: #f6eeea;
-  padding: 10px 12px;
-  border: none;
-  border-radius: 10px;
+  height: 44px;              /* Стандартизована висота */
+  background-color: #ffffff; /* Білий фон, як у картки */
+  border: 1px solid #e0d5ce; /* Тонка світла рамка */
+  border-radius: 14px;       /* Заокруглення кутів точно як у картки маршруту */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  font-size: 15px;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-  margin: 10px 0;
-  box-shadow: 0 2px 5px #111a6815;
+  margin: 15px 0;
+
+  /* Стиль тексту */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  color: #7d6e65;            /* Елегантний коричневий колір тексту */
+  letter-spacing: 0.8px;
+  text-transform: uppercase; /* Великі літери розріджені */
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); /* Дуже легка, ледь помітна тінь */
+  transition: all 0.2s ease-in-out;
 }
 
+/* Ефекти при наведенні та кліку */
 .route-mode-btn:hover {
-  background-color: #ada7a4;
-  color: #5a4e48;
+  background-color: #faf7f5; /* Легкий кремовий відтінок при наведенні */
+  border-color: #7d6e65;     /* Рамка стає чіткішою */
+  color: #26160d;            /* Текст стає темнішим */
 }
 
-.route-info-text {
-  background: rgba(233, 220, 207, 0.6);
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 5px #111a6810;
+.route-mode-btn:active {
+  transform: scale(0.98);    /* Легкий ефект натискання */
+}
+
+/* Основний контейнер білої картки як на фото 2 */
+.modern-route-card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 16px 16px 0 16px; /* Знизу 0, бо там буде кнопка з бордером */
+  margin: 15px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
-  gap: 6px;
 }
+
+/* Контейнер для лінії та текстових полів */
+.route-timeline-wrapper {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 14px;
+}
+
+/* Створення вертикального треку з кружечками */
+.route-visual-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 6px;
+}
+
+.circle-from {
+  width: 10px;
+  height: 10px;
+  border: 2px solid #7d6e65;
+  background-color: #ffffff;
+  border-radius: 50%;
+}
+
+.connecting-line {
+  width: 2px;
+  flex-grow: 1;
+  background-color: #e0d5ce;
+  margin: 4px 0;
+}
+
+.circle-to {
+  width: 12px;
+  height: 12px;
+  background-color: #7d6e65;
+  border-radius: 50%;
+}
+
+/* Блок із текстами */
+.route-text-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex-grow: 1;
+}
+
+.route-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Підписи "звідки" та "куди" маленькими літерами */
+.field-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #a0928a;
+  text-transform: lowercase;
+}
+
+.point-empty {
+  margin: 0;
+  font-size: 14px;
+  color: #bfaea5;
+  font-style: italic;
+}
+
+.point-filled {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #26160d;
+  line-height: 1.3;
+}
+
+.modern-cancel-route-btn {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-top: 1px solid #f0e6df; /* Тонка лінія розмежування */
+  padding: 14px 0;
+  color: #7d6e65;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase; /* Великі літери розріджені */
+  cursor: pointer;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.modern-cancel-route-btn:hover {
+  background-color: #faf7f5;
+  color: #26160d;
+}
+
+
 .point-empty {
   margin: 0;
   padding: 6px 8px;
@@ -292,16 +511,7 @@
   background: rgba(255, 255, 255, 0.4);
   border-radius: 6px;
 }
-.point-filled {
-  margin: 0;
-  padding: 6px 8px;
-  font-size: 14px;
-  color: #3d2e20;
-  font-weight: 600;
-  background: #f6eeea;
-  border-radius: 6px;
-  border-left: 4px solid #5a4e48;
-}
+
 
 
 @media (min-width: 768px) and (max-width: 1024px) {
@@ -313,8 +523,9 @@
   }
 
   .language-switcher button {
-    padding: 10px 14px;
-    font-size: 20px;
+    height: 36px;
+    padding: 0 16px;
+    font-size: 15px;
   }
 
   .search-input {
