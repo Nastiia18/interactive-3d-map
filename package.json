@@ -2,7 +2,7 @@
   "name": "oamapnav",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://interactive-3d-map.vercel.app",
   "dependencies": {
     "@mediapipe/tasks-vision": "^0.10.22-rc.20250304",
     "@react-three/drei": "^9.114.6",
