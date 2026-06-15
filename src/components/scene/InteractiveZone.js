@@ -4,7 +4,9 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 const InteractiveZone = ({ modelPath, position, onClick, isActive, color }) => {
-  const { scene } = useGLTF(modelPath);
+  const cleanPath = modelPath.replace(/^(\.\.\/|\.\/)/, "/");
+  const { scene } = useGLTF(process.env.PUBLIC_URL + cleanPath);
+
   const [opacity, setOpacity] = useState(0);
 
   useEffect(() => {

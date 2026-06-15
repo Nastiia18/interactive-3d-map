@@ -22,7 +22,7 @@ const getNodeFloor = (nodeId, nodesObj) => {
 
 const FloorModel1 = () => {
   const { t } = useTranslation();
-  const { scene, error, isLoading } = useGLTF("../models/floor1.glb");
+  const { scene, error, isLoading } = useGLTF(process.env.PUBLIC_URL + "/models/floor1.glb");
 
     const colorMap = useLoader(THREE.TextureLoader, "/textures/d2.jpg");
     const normalMap = useLoader(THREE.TextureLoader, "/textures/n2.jpg");
@@ -60,7 +60,7 @@ const FloorModel1 = () => {
 
 const FloorModel2 = () => {
   const { t } = useTranslation();
-  const { scene, error, isLoading } = useGLTF("../models/floor2.glb");
+  const { scene, error, isLoading } = useGLTF(process.env.PUBLIC_URL + "/models/floor2.glb");
 
 
     const colorMap = useLoader(THREE.TextureLoader, "/textures/diffuse.jpg");
