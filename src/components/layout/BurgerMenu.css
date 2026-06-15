@@ -79,10 +79,7 @@
   border-bottom: 2px solid white;
   font-size: 15px;
 }
-.accordion-toggle:hover {
-  background: #5a4e48;
-  color: #fff;
-}
+
 
 .accordion-content {
   padding: 0;
@@ -123,13 +120,17 @@
 .search-wrapper {
   display: flex;
   align-items: center;
-  background-color: #f3ede8;
-  border-radius: 30px;
+  background: #ffffff;
+  border: 2px solid #d8c8bc;
+  border-radius: 16px;
   padding: 0 16px;
-  margin: 15px 0;
-  height: 40px;
-  box-shadow: none;
-  transition: all 0.2s ease;
+  margin: 18px 0;
+  height: 44px;
+  box-shadow:
+          0 4px 12px rgba(0,0,0,0.05),
+          0 1px 3px rgba(0,0,0,0.03);
+
+  transition: all .2s ease;
 }
 
 search-wrapper:focus-within {
@@ -289,7 +290,7 @@ search-wrapper:focus-within {
 
 .language-switcher button.active {
   background-color: #ffffff;
-  color: #26160d; /* Темний колір тексту */
+  color: #26160d;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
@@ -306,64 +307,100 @@ search-wrapper:focus-within {
     left: 0;
     border-radius: 0;
     box-sizing: border-box;
-    padding: 80px 15px 20px 15px;
-    background: rgba(246, 238, 234, 0.98);
+    padding: 90px 20px 20px 20px;
+    background: rgba(246, 238, 234, 0.96);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
     z-index: 2000;
+    font-size: 14px;
   }
 
   .language-switcher {
     position: absolute;
     top: 25px;
-    right: 15px;
+    right: 20px;
     z-index: 2001;
     margin-bottom: 0;
-    background-color: #f3ede8;
+    background-color: #e0d5ce;
     padding: 3px;
     border-radius: 30px;
   }
+
   .language-switcher button {
-    height: 30px;
-    padding: 0 12px;
-    font-size: 12px;
+    height: 32px;
+    padding: 0 14px;
+    font-size: 13px;
+    font-weight: 700;
   }
 
+  /* Пошуковий рядок */
   .search-wrapper {
     width: 100%;
     box-sizing: border-box;
-    margin: 10px 0 20px 0;
+    margin: 12px 0 16px 0;
+    height: 46px; /* Комфортна висота для тачу */
   }
 
   .search-input {
     width: 100%;
-    font-size: 16px;
+    font-size: 15px; /* Хороший читабельний розмір без масштабування IOS */
   }
-
   .accordion-toggle {
-    padding: 15px;
-    margin-bottom: 10px;
-    font-size: 16px;
+    width: 100%;
+    background: transparent !important; /* Жодного суцільного білого чи бежевого фону */
+    border: none !important;
+    border-bottom: none !important;
+    padding: 16px 6px; /* Збільшений вертикальний тач-таргет */
+    font-size: 14px; /* Чіткий капслок */
+    font-weight: 800;
+    color: #26160d;
+    text-transform: uppercase; /* Зберігаємо примусовий Caps Lock */
+    letter-spacing: 0.8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .room-btn {
-    padding: 12px 15px;
-    font-size: 15px;
+  .accordion-toggle:hover {
+    background: transparent !important;
+    opacity: 0.8;
   }
+
+  /* Список кімнат всередині категорії */
+  .accordion-content {
+    padding: 4px 0 12px 0;
+    gap: 4px; /* Трохи вільніший простір на мобільних */
+  }
+
+  .room-btn {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 12px 16px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #5a4e48;
+    border-radius: 12px;
+    text-align: left;
+  }
+
+  .room-btn:hover {
+    background-color: #faf7f5;
+    color: #26160d;
+  }
+
+
 }
 
 /* Кнопка "Додати маршрут" у початковому стані меню */
 .route-mode-btn {
   width: 100%;
-  height: 44px;              /* Стандартизована висота */
-  background-color: #ffffff; /* Білий фон, як у картки */
-  border: 1px solid #e0d5ce; /* Тонка світла рамка */
-  border-radius: 14px;       /* Заокруглення кутів точно як у картки маршруту */
-
+  height: 44px;
+  background-color: #ffffff;
+  border: 1px solid #e0d5ce;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -374,44 +411,42 @@ search-wrapper:focus-within {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 12px;
   font-weight: 800;
-  color: #7d6e65;            /* Елегантний коричневий колір тексту */
+  color: #7d6e65;
   letter-spacing: 0.8px;
-  text-transform: uppercase; /* Великі літери розріджені */
+  text-transform: uppercase;
 
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); /* Дуже легка, ледь помітна тінь */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
   transition: all 0.2s ease-in-out;
 }
 
 /* Ефекти при наведенні та кліку */
 .route-mode-btn:hover {
-  background-color: #faf7f5; /* Легкий кремовий відтінок при наведенні */
-  border-color: #7d6e65;     /* Рамка стає чіткішою */
-  color: #26160d;            /* Текст стає темнішим */
+  background-color: #faf7f5;
+  border-color: #7d6e65;
+  color: #26160d;
 }
 
 .route-mode-btn:active {
-  transform: scale(0.98);    /* Легкий ефект натискання */
+  transform: scale(0.98);
 }
 
-/* Основний контейнер білої картки як на фото 2 */
 .modern-route-card {
   background-color: #ffffff;
   border-radius: 20px;
-  padding: 16px 16px 0 16px; /* Знизу 0, бо там буде кнопка з бордером */
+  padding: 16px 16px 0 16px;
   margin: 15px 0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
 }
 
-/* Контейнер для лінії та текстових полів */
+
 .route-timeline-wrapper {
   display: flex;
   gap: 16px;
   padding-bottom: 14px;
 }
 
-/* Створення вертикального треку з кружечками */
 .route-visual-line {
   display: flex;
   flex-direction: column;
@@ -455,7 +490,6 @@ search-wrapper:focus-within {
   gap: 2px;
 }
 
-/* Підписи "звідки" та "куди" маленькими літерами */
 .field-label {
   font-size: 11px;
   font-weight: 700;
@@ -482,13 +516,13 @@ search-wrapper:focus-within {
   width: 100%;
   background: transparent;
   border: none;
-  border-top: 1px solid #f0e6df; /* Тонка лінія розмежування */
+  border-top: 1px solid #f0e6df;
   padding: 14px 0;
   color: #7d6e65;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 1px;
-  text-transform: uppercase; /* Великі літери розріджені */
+  text-transform: uppercase;
   cursor: pointer;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
@@ -525,7 +559,7 @@ search-wrapper:focus-within {
   .language-switcher button {
     height: 36px;
     padding: 0 16px;
-    font-size: 15px;
+    font-size: 20px;
   }
 
   .search-input {
@@ -553,5 +587,263 @@ search-wrapper:focus-within {
     width: 30px;
     height: 30px;
   }
+  .burger-toggle {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+  }
+ .burger-icon {
+    width: 24px;
+    height: 24px;
+  }
+.button-container {
+    gap: 12px;
+    padding: 8px;
+    top: 20px;
+  }
 
+  .floor-button {
+    height: 52px;
+    padding: 0 28px;
+    font-size: 20px;     /* Великий чіткий текст */
+    font-weight: 700;
+  }
+
+  /* === КНОПКИ ЗУМУ (ВЕЛИКІ ДЛЯ ПЛАНШЕТА) === */
+  .zoom-controls {
+    left: 25px;
+    bottom: 45px;
+  }
+  .zoom-button {
+    width: 62px;
+    height: 62px;
+    font-size: 34px;
+  }
+
+  /* === КНОПКА БУРГЕРА ТА ІКОНКА === */
+  .burger-toggle {
+    width: 58px;         /* Робимо зручною для тачу на планшеті */
+    height: 58px;
+    border-radius: 16px;
+  }
+
+  .burger-icon {
+    width: 28px;         /* Оптимальний розмір ліній */
+    height: 28px;
+  }
+
+  /* === САЙДБАР / МЕНЮ НА ПЛАНШЕТІ === */
+  .burger-menu {
+    width: 420px;        /* Зберігаємо комфортну ширину */
+    padding: 100px 24px 24px 24px;
+    background: rgba(246, 238, 234, 0.96); /* Такий самий бежевий з blur, як на веб/моб */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-size: 20px;
+  }
+
+  /* Перемикач мов */
+  .language-switcher button {
+    height: 38px;
+    padding: 0 18px;
+    font-size: 18px;
+  }
+
+  /* Поле пошуку */
+  .search-wrapper {
+    height: 50px;
+    margin: 20px 0;
+  }
+
+  .search-input {
+    font-size: 20px;
+    padding: 0;
+  }
+
+  /* КАТЕГОРІЇ (Адміністрація, Аудиторії тощо) — СИНХРОН З ВЕБ */
+  .accordion-toggle {
+    width: 100%;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: none !important;
+    padding: 18px 8px;
+    font-size: 20px;
+    font-weight: 800;
+    color: #26160d;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .accordion-toggle:hover {
+    background: transparent !important;
+    opacity: 0.8;
+  }
+
+  .menu-section {
+    margin-bottom: 8px;
+  }
+
+
+  .accordion-content {
+    padding: 6px 0 14px 0;
+    gap: 4px;
+  }
+
+  .room-btn {
+    padding: 14px 18px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #5a4e48;
+    background: transparent;
+    border-radius: 12px;
+  }
+
+  .room-btn:hover {
+    background-color: #faf7f5;
+    color: #26160d;
+  }
+
+  /* АКТИВНА ОБРАНА КІМНАТА НА ПЛАНШЕТІ */
+  .room-btn.selected {
+    background-color: #fcf6f0 !important; /* Крем-плашка, як на веб */
+    color: #26160d !important;
+    font-weight: 700 !important;
+    box-shadow: inset 4px 0 0 0 #cf946d !important; /* Вертикальна лінія ліворуч */
+  }
+
+  /* === ЗБІЛЬШЕННЯ ПІНІВ (МАЯЧКІВ) НА МАПІ ДЛЯ ПЛАНШЕТІВ === */
+  .modern-pin-container {
+    padding: 18px;
+  }
+  .modern-pin {
+    width: 56px;
+    height: 56px;
+  }
+  .modern-pin-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .modern-pin-label {
+    font-size: 16px;
+    padding: 8px 16px;
+    margin-top: 14px;
+  }
+  .pin-variant-entrance .modern-pin-label::after {
+    top: -6px;
+    width: 10px;
+    height: 10px;
+  }
+  .pin-variant-stairs .modern-pin-label {
+    margin-bottom: 14px;
+  }
+  .pin-variant-stairs .modern-pin-label::after {
+    bottom: -6px;
+    width: 10px;
+    height: 10px;
+  }
+  .route-mode-btn {
+    height: 56px;
+    border-radius: 16px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    margin: 20px 0;
+  }
+  .accordion-content {
+    padding: 8px 0 16px 0;
+    gap: 6px;
+  }
+
+  .room-btn {
+    padding: 16px 20px;
+    font-size: 21px;
+    font-weight: 600;
+    color: #3d2e20;
+    background: transparent;
+    border-radius: 14px;
+  }
+  /* === ПОШУК АУДИТОРІЙ (КОНКРЕТНЕ ЗБІЛЬШЕННЯ КАРТКИ ТА ТЕКСТУ) === */
+  .search-wrapper {
+    height: 54px;
+    border-radius: 18px;
+    padding: 0 20px;
+    margin: 22px 0;
+    font-size: 20px;
+  }
+  .search-icon {
+    width: 22px;               /* Збільшуємо іконку самої лупи (було 16px) */
+    height: 22px;
+    margin-right: 12px;
+  }
+  .search-input {
+    font-size: 20px;           /* Збільшуємо шрифт вводу та Placeholder до 20px */
+    padding: 0;
+  }
+  .modern-route-card {
+    border-radius: 24px;       /* Трохи більші заокруглення для великого екрана */
+    padding: 22px 22px 0 22px; /* Збільшені внутрішні відступи (було 16px) */
+    margin: 20px 0;            /* Більше простору між пошуком та карткою */
+  }
+
+  /* Контейнер для лінії та текстових полів */
+  .route-timeline-wrapper {
+    gap: 20px;                 /* Збільшили відстань між графічною лінією та текстом */
+    padding-bottom: 18px;
+  }
+
+  /* Візуальна лінія з кружечками (робимо помітнішою) */
+  .route-visual-line {
+    padding-top: 8px;
+  }
+  .circle-from {
+    width: 12px;
+    height: 12px;
+    border: 2.5px solid #7d6e65;
+  }
+  .connecting-line {
+    width: 2.5px;
+    margin: 6px 0;
+  }
+  .circle-to {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Блок із текстами полів маршруту */
+  .route-text-fields {
+    gap: 18px;
+  }
+
+  .route-field-group {
+    gap: 4px;
+  }
+
+  /* Маленькі підписи "звідки" та "куди" */
+  .field-label {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  /* Стан, коли точка МАРШРУТУ ЩЕ НЕ ОБРАНА (курсив) */
+  .point-empty {
+    font-size: 18px;
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+
+  /* Стан, КОЛИ ТОЧКА ОБРАНА (назва кабінету) */
+  .point-filled {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  /* КНОПКА "СКАСУВАТИ МАРШРУТ" ВНИЗУ КАРТКИ */
+  .modern-cancel-route-btn {
+    padding: 18px 0;
+    font-size: 18px;
+    letter-spacing: 1.2px;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+  }
 }

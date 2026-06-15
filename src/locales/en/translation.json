@@ -16,7 +16,7 @@
       "assistantrector": "Assistant to the Rector",
       "rectorsroom": "Rector's Office",
       "ViceRectorResearch": "Vice-Rector for Research",
-      "assistantRecto": "Assistant Rector"
+      "vivat": "Vivat"
     },
     "economic": {
       "dekanat_economic": "Dean's Office of the Faculty of Economics",
@@ -73,7 +73,6 @@
     "p3": "P3",
     "studentdepartment": "Student Personnel Department",
     "trainingclass": "Training Class",
-    "vivat": "Vivat",
 
     "a7": "Auditorium №7",
     "a7a": "Auditorium №7a",
@@ -119,7 +118,8 @@
       "kpolit": "Department of Political Science",
       "kreligions": "Department of Religious Studies",
       "careercounselor": "Career Guidance Specialist",
-      "p5": "P5"
+      "p5": "P5",
+      "clerk": "Clerk"
     },
     "sections": {
       "admin": "Administration",
@@ -127,7 +127,22 @@
       "auditorium": "Auditoriums",
       "idzdn": "IDZDN",
       "khistory": "Department of History",
-      "kinternationalrelations": "Department of International Relations"
+      "kinternationalrelations": "Department of International Relations",
+      "entrances": "Etrances"
+    },
+      "features": {
+        "projector": "Projector",
+        "pc": "Computer Lab"
+    },
+    "descriptions": {
+      "rector": "<p><strong>Rector's Office</strong> — the working space of the head of NaUOA, Professor Ihor Pasichnyk. The hub of strategic university management, hosting official receptions for diplomats, ambassadors, and honored guests.</p>",
+      "academiccouncil": "<p><strong>Academic Council Chamber</strong> — the venue for meetings of the university's governing body. This space is used to approve NaUOA development strategies, educational programs, and host thesis defenses.</p>",
+      "prorector": "<p><strong>Vice-Rector for Student Affairs Office</strong> — the center for coordinating extracurricular university life. It manages student self-governance, dormitories, cultural, and volunteer projects.</p>",
+      "assistantrector": "<p><strong>Assistant to the Rector's Office</strong> — the organizational wing of the management. Coordinates the Rector's schedule, official visits, and communication with university partners.</p>",
+      "rectorsroom": "<p><strong>Rector's Reception Room</strong> — the central hall of the administrative block. It serves as a collection hub for official inquiries from faculty and students, and a waiting area for delegations.</p>",
+      "ViceRectorResearch": "<p><strong>Vice-Rector for Research Office</strong> — the headquarters of scientific activity at NaUOA. Manages postgraduate studies, research publications, and international conferences.</p>",
+      "dekan_economic": "<p><strong>Dean's Office</strong> — the official office of the head of the Faculty of Economics. Designed for strategic planning, student hours, and resolving academic matters.</p>",
+      "dekanat_economic": "<p><strong>Faculty Office</strong> — the administrative center of the faculty. Here, registration officers and deputy deans manage schedules, exams, and issue certificates to students.</p>"
     },
     "placeholder": "Search for a room..."
   },
@@ -138,5 +153,23 @@
     "to": "To",
     "chooseFrom": "Choose starting point",
     "chooseTo": "Choose destination"
+  },
+  "entrances": {
+    "main_entrance": "Main Entrance (New Building)",
+    "side_entrance_1": "Faculty of Economics Entrance",
+    "side_entrance_2": "Entrance from Academic Courtyard",
+    "side_entrance_3": "Entrance from Monastery Garden",
+    "side_entrance_4": "Old Monastery Building Entrance",
+    "side_entrance_5": "Entrance from Dormitories"
+  },
+  "labels": {
+    "main_entrance": "Main Entrance",
+    "side_entrance_1": "Entrance #2",
+    "side_entrance_2": "Entrance #3",
+    "side_entrance_3": "Entrance #4",
+    "side_entrance_4": "Entrance #5",
+    "side_entrance_5": "Entrance #6",
+    "entrances": "Entrances",
+    "stairs": "Stairs"
   }
 }

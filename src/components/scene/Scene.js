@@ -10,6 +10,15 @@ import "./Scene.css";
 import { bfs } from "../../navigation/pathfinding";
 import RoutePath from "../../navigation/RoutePath";
 import { Html, Billboard } from "@react-three/drei";
+import { navigationNodes } from "../../navigation/navigationNodes";
+
+const getNodeFloor = (nodeId, nodesObj) => {
+    const node = nodesObj[nodeId];
+    if (!node) return 1;
+
+    const yCoord = node[1];
+    return yCoord > 0.5 ? 2 : 1;
+};
 
 const FloorModel1 = () => {
   const { t } = useTranslation();
@@ -53,7 +62,7 @@ const FloorModel2 = () => {
   const { t } = useTranslation();
   const { scene, error, isLoading } = useGLTF("../models/floor2.glb");
 
-    // Завантаження текстур
+
     const colorMap = useLoader(THREE.TextureLoader, "/textures/diffuse.jpg");
     const normalMap = useLoader(THREE.TextureLoader, "/textures/normal_gl.jpg");
     const roughnessMap = useLoader(THREE.TextureLoader, "/textures/rough.jpg");
@@ -87,19 +96,21 @@ const FloorModel2 = () => {
   return <primitive object={scene} scale={0.05} />;
 };
 
-const MapIconMarker = ({ position, iconUrl, label, onClick }) => {
+const MapIconMarker = ({ position, iconUrl, label, onClick, variant = "entrance" }) => {
     return (
         <group position={[position[0], position[1] + 0.2, position[2]]}>
             <Billboard follow={true}>
                 <Html
                     center
                     distanceFactor={15}
-                    style={{ pointerEvents: 'auto',
-                        zIndex: 1 }}
+                    style={{
+                        pointerEvents: 'auto',
+                        zIndex: 1
+                    }}
                 >
-                    <div className="modern-pin-container" onClick={onClick}>
+                    <div className={`modern-pin-container pin-variant-${variant}`} onClick={onClick}>
                         <div className="modern-pin">
-                            <img src={iconUrl} alt={label} className="modern-pin-icon" />
+                            <img src={iconUrl} alt={label} className="modern-pin-icon"/>
                         </div>
                         <div className="modern-pin-label">{label}</div>
                     </div>
@@ -109,18 +120,22 @@ const MapIconMarker = ({ position, iconUrl, label, onClick }) => {
     );
 };
 
-const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange, routeFrom, routeTo }) => {
+const Scene = ({
+                   setActiveRoom, activeRoom, activeFloor, onFloorChange, routeFrom, routeTo,
+                   setRouteFrom,
+                   setIsRouteMode,
+                   setIsMenuOpen }) => {
   const [currentFloor, setCurrentFloor] = useState(activeFloor);
   const controlsRef = useRef();
   const [route, setRoute] = useState(null);
   const { t } = useTranslation();
+
   useEffect(() => {
     setCurrentFloor(activeFloor);
   }, [activeFloor]);
 
 
     useEffect(() => {
-
         if (!routeFrom || !routeTo) {
             setRoute(null);
             return;
@@ -128,6 +143,12 @@ const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange, routeFro
         const path = bfs(routeFrom, routeTo);
         setRoute(path);
     }, [routeFrom, routeTo]);
+
+    const handleEntranceClick = (entranceId) => {
+        setRouteFrom(entranceId);
+        setIsRouteMode(true);
+        setIsMenuOpen(true);
+    };
 
   const renderInteractiveZones = () => {
     if (currentFloor === 1) {
@@ -909,6 +930,13 @@ const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange, routeFro
             onClick={() => setActiveRoom("tzn")}
             isActive={activeRoom === "tzn"}
           />
+            <InteractiveZone
+                modelPath="../models/vivat.glb"
+                position={[0, 0, 0]}
+                color="#e88d33"
+                onClick={() => setActiveRoom("vivat")}
+                isActive={activeRoom === "vivat"}
+            />
         </>
       );
     }
@@ -942,117 +970,110 @@ const Scene = ({ setActiveRoom, activeRoom, activeFloor, onFloorChange, routeFro
               </button>
           </div>
 
-          <Canvas style={{ height: "100vh", position: "relative", zIndex: 1 }}>
+          <Canvas style={{height: "100vh", position: "relative", zIndex: 1}}  camera={{ position: [0, 15, 20], fov: 50 }} >
 
-              <color attach="background" args={["#e3d7c9"]}/>
+             <color attach="background" args={["#e3d7c9"]}/>
               <ambientLight intensity={0.5}/>
               <directionalLight position={[10, 10, 5]}/>
 
 
-              {currentFloor === 1 && <FloorModel1/>}
-              {currentFloor === 2 && <FloorModel2/>}
+              <group visible={currentFloor === 1}>
+                  <FloorModel1/>
+              </group>
+
+              <group visible={currentFloor === 2}>
+                  <FloorModel2/>
+              </group>
+
               {renderInteractiveZones()}
 
               {currentFloor === 1 && (
                   <>
-                  <MapIconMarker
-                      position={[8, 0.7, 8.5]}
-                      iconUrl="/icon/exit.png"
-                      label="Головний вхід"
-                      onClick={() => console.log("clicked")}
-                  />
-
-                  <MapIconMarker
-                  position={[10.5, 0.7, 2]}
-                  iconUrl="/icon/exit.png"
-                  label="Вхід"
-                  onClick={() => console.log("entrance")}
-                  />
+                     <MapIconMarker
+                          position={[8, 0.7, 8.5]}
+                          iconUrl="/icon/exit.png"
+                          label={t("labels.main_entrance")}
+                          onClick={() => handleEntranceClick("main_entrance")}
+                      />
+                      <MapIconMarker
+                          position={[10.7, 0.7, 2.2]}
+                          iconUrl="/icon/exit.png"
+                          label={t("labels.side_entrance_1")}
+                          onClick={() => handleEntranceClick("side_entrance_1")}
+                      />
                       <MapIconMarker
                           position={[2, 0.7, 6]}
                           iconUrl="/icon/exit.png"
-                          label="Вхід"
-                          onClick={() => console.log("entrance")}
+                          label={t("labels.side_entrance_2")}
+                          onClick={() => handleEntranceClick("side_entrance_2")}
                       />
                       <MapIconMarker
                           position={[-4, 0.7, 6.5]}
                           iconUrl="/icon/exit.png"
-                          label="Вхід"
-                          onClick={() => console.log("entrance")}
+                          label={t("labels.side_entrance_3")}
+                          onClick={() => handleEntranceClick("side_entrance_3")}
                       />
                       <MapIconMarker
                           position={[13.2, 0.7, -16.5]}
                           iconUrl="/icon/exit.png"
-                          label="Вхід"
-                          onClick={() => console.log("entrance")}
+                          label={t("labels.side_entrance_4")}
+                          onClick={() => handleEntranceClick("side_entrance_4")}
                       />
                       <MapIconMarker
                           position={[9, 0.7, -18.5]}
                           iconUrl="/icon/exit.png"
-                          label="Вхід"
-                          onClick={() => console.log("entrance")}
+                          label={t("labels.side_entrance_5")}
+                          onClick={() => handleEntranceClick("side_entrance_5")}
                       />
+                      <MapIconMarker position={[10.5, 0.7, 13.8]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
+                      <MapIconMarker position={[7, 0.7, 5.5]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
+                      <MapIconMarker position={[12.5, 0.7, 0]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
+                      <MapIconMarker position={[12.5, 0.7, -7]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
+                      <MapIconMarker position={[10.2, 0.7, -13.5]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
+                      <MapIconMarker position={[10.5, 0.7, -19]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
+                     <MapIconMarker position={[4, 0.7, 5.5]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
                 </>
               )}
 
               {currentFloor === 2 && (
                   <>
-                      <MapIconMarker
-                          position={[10.5, 0.9, 13]}
-                          iconUrl="/icon/stairs.png"
-                          label="Сходи"
-                          onClick={() => console.log("stairs")}
-                      />
+                      <MapIconMarker position={[10.5, 0.9, 13.8]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
+                      <MapIconMarker position={[7, 0.9, 5.5]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
+                      <MapIconMarker position={[12.5, 0.9, 0]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
+                      <MapIconMarker position={[12.5, 0.9, -7]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
+                      <MapIconMarker position={[10.2, 0.9, -13.5]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
+                      <MapIconMarker position={[10.5, 0.9, -19]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
+                      <MapIconMarker position={[4, 0.9, 5.5]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
+                      <MapIconMarker position={[-2.2, 0.9, -1]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
+                      <MapIconMarker position={[-5.5, 0.9, -1]} iconUrl="/icon/stairs.png" label={t("labels.stairs")} onClick={() => onFloorChange(2)} variant="stairs" />
 
-                      <MapIconMarker
-                          position={[7, 0.9, 5]}
-                          iconUrl="/icon/stairs.png"
-                          label="Сходи"
-                          onClick={() => console.log("stairs")}
-                      />
-                      <MapIconMarker
-                          position={[12.5, 0.9, 0]}
-                          iconUrl="/icon/stairs.png"
-                          label="Сходи"
-                          onClick={() => console.log("stairs")}
-                      />
-
-                      <MapIconMarker
-                          position={[12.5, 0.9, -7]}
-                          iconUrl="/icon/stairs.png"
-                          label="Сходи"
-                          onClick={() => console.log("stairs")}
-                      />
-                      <MapIconMarker
-                          position={[10.2, 0.9, -13.5]}
-                          iconUrl="/icon/stairs.png"
-                          label="Сходи"
-                          onClick={() => console.log("stairs")}
-                      />
-
-                      <MapIconMarker
-                          position={[10.5, 0.9, -19]}
-                          iconUrl="/icon/stairs.png"
-                          label="Сходи"
-                          onClick={() => console.log("stairs")}
-                      />
                   </>
               )}
 
-              {route?.map((p, i) =>
-                  i < route.length - 1 ? (
-                      <RoutePath key={i} path={[route[i], route[i + 1]]} />
-                  ) : null
-              )}
 
+              {(() => {
+                  if (!route || route.length === 0) return null;
 
-              {route && route.map((node, index) => {
-                  if (index === route.length - 1) return null;
+                  const currentFloorNodes = route.filter(nodeId => getNodeFloor(nodeId, navigationNodes) === currentFloor);
+                  if (currentFloorNodes.length < 2) return null;
+
+                  const pathCoordinates = currentFloorNodes.map(nodeId => {
+                      const coords = navigationNodes[nodeId];
+                      if (!coords) return [0, 0, 0];
+                      return [coords[0], coords[1] + 0.02, coords[2]];
+                  });
+
+                  const isStartOnThisFloor = getNodeFloor(route[0], navigationNodes) === currentFloor;
+                  const isEndOnThisFloor = getNodeFloor(route[route.length - 1], navigationNodes) === currentFloor;
 
                   return (
-                      <RoutePath key={index} path={[route[index], route[index + 1]]}/>
+                      <RoutePath
+                          path={pathCoordinates}
+                          showStartCircle={isStartOnThisFloor}
+                          showEndPin={isEndOnThisFloor}
+                      />
                   );
-              })}
+              })()}
 
               <CameraControls ref={controlsRef}/>
           </Canvas>

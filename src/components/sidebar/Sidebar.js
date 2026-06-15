@@ -19,6 +19,7 @@ const Sidebar = ({ room, closeSidebar }) => {
       title: t("rooms.auditorium.a2"),
       image: "../images/a2.jpg",
       text: "",
+      features: ["projector"]
     },
     a3: {
       title: t("rooms.auditorium.a3"),
@@ -39,6 +40,7 @@ const Sidebar = ({ room, closeSidebar }) => {
       title: t("rooms.auditorium.a8"),
       image: "../images/a8.jpg",
       text: "",
+      features: ["projector"]
     },
     a8a: {
       title: t("rooms.auditorium.a8a"),
@@ -54,16 +56,19 @@ const Sidebar = ({ room, closeSidebar }) => {
       title: t("rooms.auditorium.a16"),
       image: "../images/a16.jpg",
       text: "",
+      features: ["projector"]
     },
     a17: {
       title: t("rooms.auditorium.a17"),
       image: "../images/a17.jpg",
       text: "",
+      features: ["projector"]
     },
     a24: {
       title: t("rooms.auditorium.a24"),
       image: "../images/a24.jpg",
       text: "",
+      features: ["projector"]
     },
     a25: {
       title: t("rooms.auditorium.a25"),
@@ -89,6 +94,7 @@ const Sidebar = ({ room, closeSidebar }) => {
       title: t("rooms.auditorium.a19"),
       image: "../images/a19.jpg",
       text: "",
+      features: ["pc"]
     },
     a46: {
       title: t("rooms.auditorium.a46"),
@@ -148,13 +154,12 @@ const Sidebar = ({ room, closeSidebar }) => {
     academiccouncil: {
       title: t("rooms.admin.academiccouncil"),
       image: "",
-      text: "",
+      text: t("rooms.descriptions.academiccouncil", "")
     },
     assistantrector: {
-      title: t("rooms.admin.assistantRecto"),
+      title: t("rooms.admin.assistantrector"),
       image: "",
-      text: "",
-    },
+      text: t("rooms.descriptions.assistantrector", "")},
     atc: {
       title: t("rooms.auditorium.atc"),
       image: "",
@@ -171,7 +176,7 @@ const Sidebar = ({ room, closeSidebar }) => {
       text: "",
     },
     clerk: {
-      title: "clerk",
+      title: "rooms.auditorium.clerk",
       image: "",
       text: "",
     },
@@ -183,12 +188,12 @@ const Sidebar = ({ room, closeSidebar }) => {
     dekan_economic: {
       title: t("rooms.economic.dekan_economic"),
       image: "../images/novosel.jpg",
-      text: "",
+      text: t("rooms.descriptions.dekan_economic", "")
     },
     dekanat_economic: {
       title: t("rooms.economic.dekanat_economic"),
       image: "",
-      text: "",
+      text: t("rooms.descriptions.dekanat_economic", "")
     },
     dekanef: {
       title: t("rooms.economic.dekan_economic"),
@@ -269,6 +274,7 @@ const Sidebar = ({ room, closeSidebar }) => {
       title: t("rooms.auditorium.p1"),
       image: "../images/p1.jpg",
       text: "",
+      features: ["projector"]
     },
     p2: {
       title: t("rooms.auditorium.p2"),
@@ -279,12 +285,12 @@ const Sidebar = ({ room, closeSidebar }) => {
       title: t("rooms.auditorium.p5"),
       image: "../images/p5.jpg",
       text: "",
+      features: ["projector"]
     },
     prorector: {
       title: t("rooms.admin.prorector"),
       image: "",
-      text: "",
-    },
+      text: t("rooms.descriptions.prorector", "") },
     rector: {
       title: t("rooms.admin.rector"),
       image: "../images/rectors.jpg",
@@ -293,7 +299,7 @@ const Sidebar = ({ room, closeSidebar }) => {
     rectorsroom: {
       title: t("rooms.admin.rectorsroom"),
       image: "",
-      text: "",
+      text: t("rooms.descriptions.rectorsroom", "")
     },
     studentdepartment: {
       title: t("rooms.auditorium.studentdepartment"),
@@ -308,7 +314,7 @@ const Sidebar = ({ room, closeSidebar }) => {
     ViceRectorResearch: {
       title: t("rooms.admin.ViceRectorResearch"),
       image: "",
-      text: "",
+      text: t("rooms.descriptions.ViceRectorResearch", "")
     },
     vivat: {
       title: t("rooms.admin.vivat"),
@@ -319,11 +325,13 @@ const Sidebar = ({ room, closeSidebar }) => {
       title: t("rooms.auditorium.a6"),
       image: "../images/a6.jpg",
       text: "",
+      features: ["projector"]
     },
     a7: {
       title: t("rooms.auditorium.a7"),
       image: "../images/a7.jpg",
       text: "",
+      features: ["projector"]
     },
     a7a: {
       title: t("rooms.auditorium.a7a"),
@@ -364,26 +372,31 @@ const Sidebar = ({ room, closeSidebar }) => {
       title: t("rooms.auditorium.a18"),
       image: "../images/a18.jpg",
       text: "",
+      features: ["projector"]
     },
     a20: {
       title: t("rooms.auditorium.a20"),
       image: "../images/a20.jpg",
       text: "",
+      features: ["pc"]
     },
     a21: {
       title: t("rooms.auditorium.a21"),
       image: "../images/a21.jpg",
       text: "",
+      features: ["pc"]
     },
     a22: {
       title: t("rooms.auditorium.a22"),
       image: "../images/a22.jpg",
       text: "",
+      features: ["pc"]
     },
     a23: {
       title: t("rooms.auditorium.a23"),
       image: "../images/a23.jpg",
       text: "",
+      features: ["pc"]
     },
     a29: {
       title: t("rooms.auditorium.a29"),
@@ -562,7 +575,7 @@ const Sidebar = ({ room, closeSidebar }) => {
 
   };
 
-   const { title, image, text } = roomInfo[room] || {};
+   const { title, image, text, features = [] } = roomInfo[room] || {};
 
    return (
     <div className="sidebar">
@@ -586,6 +599,31 @@ const Sidebar = ({ room, closeSidebar }) => {
 
 
       {title && <h2>{title}</h2>}
+
+
+      {/* НОВИЙ БЛОК ДЛЯ БЕЙДЖІВ ТЕХНІКИ */}
+      {features.length > 0 && (
+          <div className="sidebar-features">
+            {features.includes("projector") && (
+                <span className="feature-badge badge-projector">
+              <svg className="badge-svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M2 12h20M2 16h20M6 12v4M18 12v4M2 8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8zM7 19h10" />
+              </svg>
+                  {t("rooms.features.projector")}
+            </span>
+            )}
+            {features.includes("pc") && (
+                <span className="feature-badge badge-pc">
+              <svg className="badge-svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="2" y="3" width="20" height="12" rx="2" />
+                <path d="M12 15v4M7 21h10" />
+              </svg>
+                  {t("rooms.features.pc")}
+            </span>
+            )}
+          </div>
+      )}
+
 
       {image && <img src={image} alt={title} />}
 

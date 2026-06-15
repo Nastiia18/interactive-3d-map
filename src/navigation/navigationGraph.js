@@ -1,32 +1,236 @@
 export const navigationGraph = {
-    rector: ["corridor1"],
+    museum: ["corridor_main_14_0"],
+    rector: ["corridor_main_12_6"],
+    rectorsroom: ["corridor_main_11_0"],
+    prorector: ["corridor_main_10_0"],
+    assistantrector: ["corridor_main_9_3"],
+    atc: ["corridor_main_8_2"],
+    ViceRectorResearch: ["corridor_main_7_8"],
+    academiccouncil: ["corridor_main_6_3"],
 
-    corridor1: ["rector", "corridor2"],
-    corridor2: ["corridor1", "corridor3"],
-    corridor3: ["corridor2", "prorector"],
+    // ЛАНЦЮЖОК КОРИДОРУ (Кожна точка з'єднана лише з сусідніми + своєю кімнатою)
+    corridor_main_14_0: ["museum", "corridor_main_12_6","stairs_1f"],
+    corridor_main_12_6: ["rector", "corridor_main_14_0", "corridor_main_11_0"],
+    corridor_main_11_0: ["rectorsroom", "corridor_main_12_6", "corridor_main_10_0"],
+    corridor_main_10_0: ["prorector", "corridor_main_11_0", "corridor_main_9_3"],
+    corridor_main_9_3:  ["assistantrector", "corridor_main_10_0", "corridor_main_entrance_hub"],
+    corridor_main_8_2:  ["atc", "corridor_main_entrance_hub", "corridor_main_7_8"],
+    corridor_main_7_8:  ["ViceRectorResearch", "corridor_main_8_2", "corridor_main_6_3"],
+    corridor_main_6_3:  ["academiccouncil", "corridor_main_7_8", "corridor_hub_10_5"],
 
-    prorector: ["corridor3"],
+    main_entrance: ["corridor_main_entrance_hub"],
+    corridor_main_entrance_hub: ["main_entrance", "corridor_main_9_3", "corridor_main_8_2"],
+    //
 
     //
-    museum: ["corridor_m1"],
+    cafe: ["corridor_hub_6_0"],
+    a17: ["corridor_hub_8_0"],
+    a16: ["corridor_hub_9_0"],
+    a15: ["corridor_hub_10_5"],
 
-    corridor_m1: ["museum", "corridor_m2"],
-    corridor_m2: ["corridor_m1", "corridor_m3"],
-    corridor_m3: ["corridor_m2", "rectorsroom"],
+    corridor_hub_6_0: ["cafe", "corridor_hub_8_0"],
+    corridor_hub_8_0: ["a17", "corridor_hub_6_0", "corridor_hub_9_0"],
+    corridor_hub_9_0: ["a16", "corridor_hub_8_0", "corridor_hub_10_5"],
+    corridor_hub_10_5: ["a15", "corridor_hub_9_0", "corridor_main_6_3", "corridor_main_p5"],
 
-    rectorsroom: ["corridor_m3"],
 
-    //
-    a17: ["a17_exit"],
+    // Зв'язки аудиторій із їхніми точками виходу
+    side_entrance_1: ["corridor_a8_top"],
 
-    a17_exit: ["a17", "corridor_1", "cafe"],
-    corridor_1: ["a17_exit", "a16", "a15_exit"],
+    p5: ["corridor_main_p5"],
+    a8a: ["corridor_a8_mid"],
+    a8: ["corridor_a8_top"],
 
-    a16: ["corridor_1"],
-    a15_exit: ["corridor_1", "a15"],
+    corridor_a8_top: ["a8", "corridor_a8_mid", "side_entrance_1"],
+    corridor_a8_mid: ["a8a", "corridor_a8_top", "corridor_a8_exit"],
+    corridor_a8_exit: ["corridor_a8_mid", "corridor_main_p5"],
+    corridor_main_p5: ["p5", "corridor_a8_exit", "c_long_p1_1", "corridor_hub_10_5"],
 
-    a15: ["a15_exit"],
 
-    //
-    cafe: ["a17_exit"],
+/////
+    side_entrance_4: ["c_long_m16_5_hub"],
+    side_entrance_5: ["c_long_m18_8"],
+    c_long_m16_5_hub: ["side_entrance_4", "c_long_m16_3", "c_long_m17_1"],
+
+    a2: ["c_long_p1_1"],
+    kKryvytska: ["c_long_0_1"],
+    a1: ["c_long_m1_1"],
+    a3: ["c_long_m2_2"],
+    informdepartment: ["c_long_m2_5"],
+    a4: ["c_long_m4_0"],
+    cybernetics: ["c_long_m4_6"],
+    dekan_economic: ["c_long_m5_0"],
+    drgm: ["c_long_m5_4"],
+    dekanat_economic: ["c_long_m5_7"],
+    dekanrgm: ["c_long_m6_1"],
+    a5: ["c_long_m7_1"],
+    p2: ["c_long_m8_0"],
+    p1: ["c_long_m10_0"],
+    kIEI: ["c_long_m12_0"],
+    clerk: ["c_long_m13_5"],
+
+  a57: ["c_long_m14_5"],
+    studentdepartment: ["c_long_m14_5"],
+
+    a56: ["c_long_m15_3"],
+    a55: ["c_long_m16_3"],
+    a54: ["c_long_m17_1"],
+    vivat: ["c_long_m17_9"],
+    a53: ["c_long_m18_0"],
+    a46: ["c_long_m18_8"],
+    a47: ["c_long_m19_7"],
+
+    a51: ["c_long_m20_6"],
+    a48: ["c_long_m20_6"],
+
+    a50: ["c_long_m21_5"],
+    a49: ["c_long_m21_5"],
+
+
+    c_long_p1_1:  ["a2", "c_long_0_1", "corridor_main_p5"],
+    c_long_0_1:   ["kKryvytska", "c_long_p1_1", "c_long_m1_1", "stairs_z0_1f"],
+    c_long_m1_1:  ["a1", "c_long_0_1", "c_long_m2_2"],
+    c_long_m2_2:  ["a3", "c_long_m1_1", "c_long_m2_5"],
+    c_long_m2_5:  ["informdepartment", "c_long_m2_2", "c_long_m4_0"],
+    c_long_m4_0:  ["a4", "c_long_m2_5", "c_long_m4_6"],
+    c_long_m4_6:  ["cybernetics", "c_long_m4_0", "c_long_m5_0"],
+    c_long_m5_0:  ["dekan_economic", "c_long_m4_6", "c_long_m5_4"],
+    c_long_m5_4:  ["drgm", "c_long_m5_0", "c_long_m5_7"],
+    c_long_m5_7:  ["dekanat_economic", "c_long_m5_4", "c_long_m6_1"],
+    c_long_m6_1:  ["dekanrgm", "c_long_m5_7", "c_long_m7_1"],
+    c_long_m7_1:  ["a5", "c_long_m6_1", "c_long_m8_0", "stairs_zm7_1f"],
+    c_long_m8_0:  ["p2", "c_long_m7_1", "c_long_m10_0"],
+    c_long_m10_0: ["p1", "c_long_m8_0", "c_long_m12_0"],
+    c_long_m12_0: ["kIEI", "c_long_m10_0", "c_long_m13_5"],
+    c_long_m13_5: ["clerk", "c_long_m12_0", "c_long_m14_5", "stairs_zm13_1f"],
+    c_long_m14_5: ["a57", "studentdepartment", "c_long_m13_5", "c_long_m15_3"],
+    c_long_m15_3: ["a56", "c_long_m14_5", "c_long_m16_3"],
+    c_long_m16_3: ["a55", "c_long_m15_3", "c_long_m16_5_hub"],
+    c_long_m17_1: ["a54", "c_long_m16_5_hub", "c_long_m17_9"],
+    c_long_m17_9: ["vivat", "c_long_m17_1", "c_long_m18_0", "stairs_zm19_1f"],
+    c_long_m18_0: ["a53", "c_long_m17_9", "c_long_m18_8"],
+    c_long_m18_8: ["a46", "c_long_m18_0", "c_long_m19_7", "side_entrance_5"],
+    c_long_m19_7: ["a47", "c_long_m18_8", "c_long_m20_6"],
+    c_long_m20_6: ["a51", "a48", "c_long_m19_7", "c_long_m21_5"],
+    c_long_m21_5: ["a50", "a49", "c_long_m20_6"],
+
+    /////
+// Зв'язки нових кімнат із коридором
+    infotechnologycenter: ["corridor_hub_3_0"],
+    side_entrance_2: ["corridor_hub_2_0"],
+    a24: ["corridor_hub_0_6"],
+    a25: ["corridor_hub_m1_1"],
+
+    // Нові точки коридору (з'єднані між собою)
+    corridor_hub_3_0: ["infotechnologycenter", "corridor_hub_2_0", "corridor_hub_6_0"], // З'ЄДНАННЯ З ТВОЄЮ СТАРОЮ ТОЧКОЮ 6_0!
+    corridor_hub_2_0: ["side_entrance_2", "corridor_hub_3_0", "corridor_hub_0_6"],
+    corridor_hub_0_6: ["a24", "corridor_hub_2_0", "corridor_hub_m1_1"],
+    corridor_hub_m1_1: ["a25", "corridor_hub_0_6"],
+
+
+
+///////////////////2222222222222222222222222222222////////////////
+    // === ГІЛКА ДРУГОГО ПОВЕРХУ (Адміністративне крило) ===
+    a23: ["corridor_main_13_0_2f"],
+    a22: ["corridor_main_12_0_2f"],
+    hall: ["corridor_main_9_5_2f"],
+    a21: ["corridor_main_6_1_2f"],
+
+    corridor_main_13_0_2f: ["a23", "corridor_main_12_0_2f","stairs_2f"],
+    corridor_main_12_0_2f: ["a22", "corridor_main_13_0_2f", "corridor_main_9_5_2f"],
+    corridor_main_9_5_2f:  ["hall", "corridor_main_12_0_2f", "corridor_main_6_1_2f"],
+
+    // З'ЄДНАННЯ: corridor_main_6_1_2f тепер веде і до спускного хабу, і в наступне крило до corridor_hub_10_7_2f
+    corridor_main_6_1_2f:  ["a21", "corridor_main_9_5_2f", "corridor_hub_10_6", "corridor_hub_10_7_2f"],
+
+    // === ГІЛКА ДРУГОГО ПОВЕРХУ (Крило над кафе) ===
+    a20: ["corridor_hub_10_7_2f"],
+    a19: ["corridor_hub_9_5_2f"],
+    a18: ["corridor_hub_8_1_2f"],
+    loft: ["corridor_hub_6_3_2f"],
+
+    // З'ЄДНАННЯ: corridor_hub_10_7_2f тепер веде назад в адмін-коридор до corridor_main_6_1_2f
+    corridor_hub_10_7_2f: ["a20", "corridor_hub_10_6", "corridor_hub_9_5_2f", "corridor_main_6_1_2f"],
+    corridor_hub_9_5_2f:  ["a19", "corridor_hub_10_7_2f", "corridor_hub_8_1_2f"],
+    corridor_hub_8_1_2f:  ["a18", "corridor_hub_9_5_2f", "corridor_hub_6_3_2f"],
+    corridor_hub_6_3_2f:  ["loft", "corridor_hub_8_1_2f"],
+
+
+
+    // Зв'язки кімнат із коридором кутка
+    p4: ["corridor_main_p4"],
+    a7a: ["corridor_a7_mid"],
+    a7: ["corridor_a7_top"],
+
+    // ЛАНЦЮЖОК КОРИДОРУ КУТКА (Повністю замкнутий)
+    corridor_a7_top: ["a7", "corridor_a7_mid"],
+    corridor_a7_mid: ["a7a", "corridor_a7_top", "corridor_a7_exit"],
+    corridor_a7_exit: ["corridor_a7_mid", "corridor_main_p4"],
+    corridor_main_p4: ["p4", "corridor_a7_exit", "c_long_p1_1_2f", "corridor_hub_10_6"],
+
+
+// Зв'язки кабінетів із магістраллю 2-го поверху
+    a6: ["c_long_p1_1_2f"],
+    kf: ["c_long_0_2_2f"],
+    a14: ["c_long_m1_1_2f"],
+    a9: ["c_long_m1_7_2f"],
+    a10: ["c_long_m3_5_2f"],
+    a11: ["c_long_m5_3_2f"],
+    a13: ["c_long_m5_7_2f"],
+    a12: ["c_long_m7_2_2f"],
+    a63: ["c_long_m11_0_2f"],
+    a62: ["c_long_m11_0_2f"],
+    a61: ["c_long_m12_3_2f"],
+    a64: ["c_long_m13_8_2f"],
+    a74: ["c_long_m15_1_2f"],
+    a65: ["c_long_m15_9_2f"],
+    a73: ["c_long_m17_1_2f"],
+   // vivat: ["c_long_m18_0_2f"],
+    a72: ["c_long_m18_0_2f"],
+    a67: ["c_long_m19_2_2f"],
+    a68: ["c_long_m20_4_2f"],
+    a71: ["c_long_m20_4_2f"],
+    a69: ["c_long_m21_4_2f"],
+    a70: ["c_long_m21_4_2f"],
+
+    // ЛАНЦЮЖОК ЦЕНТРАЛЬНОГО КОРИДОРУ (Послідовний рух за координатою Z від +1.1 до -21.4)
+    c_long_p1_1_2f:  ["a6", "c_long_0_2_2f", "corridor_main_p4"], // Початок коридору зв'язаний з кутком П4
+    c_long_0_2_2f:   ["kf", "c_long_p1_1_2f", "c_long_m1_1_2f", "stairs_z0_2f"],
+    c_long_m1_1_2f:  ["a14", "c_long_0_2_2f", "c_long_m1_7_2f"],
+    c_long_m1_7_2f:  ["a9", "c_long_m1_1_2f", "c_long_m3_5_2f"],
+    c_long_m3_5_2f:  ["a10", "c_long_m1_7_2f", "c_long_m5_3_2f"],
+    c_long_m5_3_2f:  ["a11", "c_long_m3_5_2f", "c_long_m5_7_2f"],
+    c_long_m5_7_2f:  ["a13", "c_long_m5_3_2f", "c_long_m7_2_2f"],
+    c_long_m7_2_2f:  ["a12", "c_long_m5_7_2f", "c_long_m11_0_2f", "stairs_zm7_2f"],
+
+    c_long_m11_0_2f: ["a63", "a62", "c_long_m7_2_2f", "c_long_m12_3_2f"],
+    c_long_m12_3_2f: ["a61", "c_long_m11_0_2f", "c_long_m13_8_2f"],
+    c_long_m13_8_2f: ["a64", "c_long_m12_3_2f", "c_long_m15_1_2f", "stairs_zm13_2f"],
+    c_long_m15_1_2f: ["a74", "c_long_m13_8_2f", "c_long_m15_9_2f"],
+    c_long_m15_9_2f: ["a65", "c_long_m15_1_2f", "c_long_m17_1_2f"],
+    c_long_m17_1_2f: ["a73", "c_long_m15_9_2f", "c_long_m18_0_2f"],
+
+    c_long_m18_0_2f: ["vivat", "a72", "c_long_m17_1_2f", "c_long_m19_2_2f", "stairs_zm19_2f"],
+    c_long_m19_2_2f: ["a67", "c_long_m18_0_2f", "c_long_m20_4_2f"],
+    c_long_m20_4_2f: ["a68", "a71", "c_long_m19_2_2f", "c_long_m21_4_2f"],
+    c_long_m21_4_2f: ["a69", "a70", "c_long_m20_4_2f"],
+
+    corridor_hub_10_6: ["corridor_main_p4", "corridor_main_6_1_2f", "corridor_hub_10_7_2f"],
+
+
+
+    //сходи
+    // СХОДИ 1 ПОВЕРХУ: Ведуть в коридор 1 поверху та НА СХОДИ 2 ПОВЕРХУ
+    stairs_1f: ["corridor_main_14_0", "stairs_2f"],
+    stairs_2f: ["corridor_main_13_0_2f", "stairs_1f"],
+
+    stairs_z0_1f: ["c_long_0_1", "stairs_z0_2f"],
+    stairs_zm7_1f: ["c_long_m7_1", "stairs_zm7_2f"],
+    stairs_zm13_1f: ["c_long_m13_5", "stairs_zm13_2f"],
+    stairs_zm19_1f: ["c_long_m17_9", "stairs_zm19_2f"],
+
+    stairs_z0_2f:   ["c_long_0_2_2f", "stairs_z0_1f"],
+    stairs_zm7_2f:  ["c_long_m7_2_2f", "stairs_zm7_1f"],
+    stairs_zm13_2f:  ["c_long_m13_8_2f", "stairs_zm13_1f"],
+    stairs_zm19_2f:  ["c_long_m18_0_2f", "stairs_zm19_1f"],
 };

@@ -52,11 +52,68 @@
 }
 
 .sidebar-text {
-  font-size: 16px;
-  line-height: 1.6;
-  text-align: justify;
-  color: #333;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 14.5px;             /* Ідеальний базовий розмір для десктопа */
+    line-height: 1.65;             /* Збільшена відстань між рядками для легкості читання */
+    text-align: left;              /* Ліве вирівнювання виглядає сучасніше за justify */
+    color: #5a4e48;                /* Твій фірмовий м'який кавовий колір для основного тексту */
 }
+
+/* Стилізація абзаців */
+.sidebar-text p {
+    margin-top: 0;
+    margin-bottom: 12px;           /* Гарний відступ між параграфами */
+}
+
+.sidebar-text p:last-child {
+    margin-bottom: 0;              /* Прибираємо зайвий відступ у кінці */
+}
+
+/* Стилізація жирного акцентного тексту (назви аудиторій/деканатів) */
+.sidebar-text strong {
+    color: #26160d;                /* Твій глибокий темний колір активних кнопок */
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+
+
+
+
+.sidebar-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: -6px;     /* Підтягуємо бейджі ближче під заголовок h2 */
+    margin-bottom: 20px;  /* Відступ до картинки чи основного тексту */
+}
+
+.feature-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: rgba(236, 224, 217, 0.4); /* Дуже легке, майже прозоре кавове тло */
+    color: #26160d;                             /* Твій глибокий темний колір */
+    border: 1.5px solid #26160d;                /* Чітка тонка рамка в тон проекту */
+    padding: 4px 10px;
+    border-radius: 6px;                         /* Легке закруглення замість круглої капсули */
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;                  /* Робимо теги акуратними як у картках товарів */
+}
+
+/* Стиль для правильного відображення лінійних іконок */
+.badge-svg-icon {
+    display: inline-block;
+    flex-shrink: 0;
+    color: #26160d;                             /* Іконка копіює колір тексту */
+    vertical-align: middle;
+}
+
+
+
 
 @media (max-width: 768px) {
   .sidebar {
@@ -109,10 +166,8 @@
     right: 20px;
     top: 20px;
     bottom: 20px;
-
     padding: 28px 28px 36px;
     border-radius: 22px;
-
     font-size: 18px;
   }
 
@@ -120,10 +175,14 @@
     font-size: 28px;
   }
 
-  .sidebar-text {
-    font-size: 20px;
-    line-height: 1.6;
-  }
+    .sidebar-text {
+        font-size: 22px !important;  /* Коригуємо твій старий 20px (20px був занадто гігантським для опису) */
+        line-height: 1.65;
+    }
+
+    .sidebar-text p {
+        margin-bottom: 16px;
+    }
 
   .sidebar button {
     width: 42px;

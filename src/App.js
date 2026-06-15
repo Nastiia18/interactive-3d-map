@@ -10,6 +10,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [activeRoom, setActiveRoom] = useState(null);
   const [activeFloor, setActiveFloor] = useState(1); // Додаємо стан активного поверху
+  const [isMenuOpen, setIsMenuOpen] = useState(false);       // Чи відкрите бургер-меню
+  const [isRouteMode, setIsRouteMode] = useState(false);
   const [route, setRoute] = useState(null);
   const [routeFrom, setRouteFrom] = useState(null);
   const [routeTo, setRouteTo] = useState(null);
@@ -31,6 +33,11 @@ function App() {
     setActiveFloor(floor);
   };
 
+  const handleCreateRoute = (from, to) => {
+    setRouteFrom(from);
+    setRouteTo(to);
+  };
+
   return (
     <Router>
       <div className="App">
@@ -40,10 +47,16 @@ function App() {
           <>
             <BurgerMenu
                 onRoomClick={setActiveRoom}
-                onCreateRoute={(from, to) => {
-                  setRouteFrom(from);
-                  setRouteTo(to);
-                }}
+                selectedRoom={activeRoom}
+                onCreateRoute={handleCreateRoute}
+                isMenuOpen={isMenuOpen}
+                setIsMenuOpen={setIsMenuOpen}
+                isRouteMode={isRouteMode}
+                setIsRouteMode={setIsRouteMode}
+                routeFrom={routeFrom}
+                setRouteFrom={setRouteFrom}
+                routeTo={routeTo}
+                setRouteTo={setRouteTo}
             />
             <Scene
                 setActiveRoom={setActiveRoom}
@@ -52,6 +65,9 @@ function App() {
                 onFloorChange={setActiveFloor}
                 routeFrom={routeFrom}
                 routeTo={routeTo}
+                setRouteFrom={setRouteFrom}
+                setIsRouteMode={setIsRouteMode}
+                setIsMenuOpen={setIsMenuOpen}
             />
             <Sidebar room={activeRoom} closeSidebar={closeSidebar} />
             <Footer />
