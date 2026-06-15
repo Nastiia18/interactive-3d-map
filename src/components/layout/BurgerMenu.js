@@ -2,19 +2,27 @@ import React, { useState, useEffect } from "react";
 import "./BurgerMenu.css";
 import { useTranslation } from "react-i18next";
 
-const BurgerMenu = ({ onRoomClick, onCreateRoute }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+const BurgerMenu = ({
+                      onRoomClick,
+                      onCreateRoute,
+                      isMenuOpen,
+                      setIsMenuOpen,
+                      isRouteMode,
+                      setIsRouteMode,
+                      routeFrom,
+                      setRouteFrom,
+                      routeTo,
+                      setRouteTo,
+                      selectedRoom
+                    }) => {
   const [openSections, setOpenSections] = useState({
+    entrances: false, // Додали секцію входів
     admin: false,
     economic: false,
     auditorium: false,
   });
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedRoom, setSelectedRoom] = useState(null);
   const { i18n, t } = useTranslation();
-  const [isRouteMode, setIsRouteMode] = useState(false);
-  const [routeFrom, setRouteFrom] = useState(null);
-  const [routeTo, setRouteTo] = useState(null);
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
@@ -29,25 +37,7 @@ const BurgerMenu = ({ onRoomClick, onCreateRoute }) => {
     setSearchTerm(e.target.value.toLowerCase());
   };
 
-  const handleRoomClick = (room) => {
-    setSelectedRoom(room);
-    onRoomClick(room);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-          !event.target.closest(".burger-menu") &&
-          !event.target.closest(".burger-toggle")
-      ) {
-        setIsMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const rooms = {
+  const rooms = React.useMemo(() => ({
     admin: [
       { id: "rector", name: t("rooms.admin.rector") },
       { id: "academiccouncil", name: t("rooms.admin.academiccouncil") },
@@ -113,7 +103,6 @@ const BurgerMenu = ({ onRoomClick, onCreateRoute }) => {
       { id: "a7", name: t("rooms.auditorium.a7") },
       { id: "a7а", name: t("rooms.auditorium.a7a") },
       { id: "a14", name: t("rooms.auditorium.a14") },
-      { id: "a7", name: t("rooms.auditorium.a7") },
       { id: "a18", name: t("rooms.auditorium.a18") },
       { id: "a20", name: t("rooms.auditorium.a20") },
       { id: "a21", name: t("rooms.auditorium.a21") },
@@ -153,22 +142,51 @@ const BurgerMenu = ({ onRoomClick, onCreateRoute }) => {
       { id: "idzdn", name: t("rooms.auditorium.idzdn") },
       { id: "khistory", name: t("rooms.auditorium.khistory") },
       { id: "kinternationalrelations", name: t("rooms.auditorium.kinternationalrelations") },
-    ],
-  };
-  const allRooms = Object.values(rooms).flat();
-  const shouldOpenSection = (section) => {
-    return rooms[section].some((room) => room.name.toLowerCase().includes(searchTerm));
-  };
+      { id: "p5", name: t("rooms.auditorium.p5") },
+      { id: "vivat", name: t("rooms.admin.vivat") },
+      { id: "clerk", name: t("rooms.auditorium.clerk") },
+      { id: "a12", name: t("rooms.auditorium.a12") },
+      { id: "a11", name: t("rooms.auditorium.a11") },
+      { id: "a13", name: t("rooms.auditorium.a13") },
+      { id: "a9", name: t("rooms.auditorium.a9") },
+    ]
+  }), [t, i18n.language]);
+
+  const hiddenEntrances = React.useMemo(() => [
+    { id: "main_entrance", name: t("entrances.main_entrance") },
+    { id: "side_entrance_1", name: t("entrances.side_entrance_1") },
+    { id: "side_entrance_2", name: t("entrances.side_entrance_2") },
+    { id: "side_entrance_3", name: t("entrances.side_entrance_3") },
+    { id: "side_entrance_4", name: t("entrances.side_entrance_4") },
+    { id: "side_entrance_5", name: t("entrances.side_entrance_5") },
+  ], [t]);
+
+
+  const allRooms = React.useMemo(() => {
+    return [...Object.values(rooms).flat(), ...hiddenEntrances];
+  }, [rooms, hiddenEntrances]);
 
   useEffect(() => {
-    const updatedOpenSections = { admin: false, economic: false, auditorium: false };
+    const updatedOpenSections = { entrances: false, admin: false, economic: false, auditorium: false };
     if (searchTerm) {
       Object.keys(rooms).forEach((section) => {
-        if (shouldOpenSection(section)) updatedOpenSections[section] = true;
+        if (rooms[section].some((room) => room.name.toLowerCase().includes(searchTerm))) {
+          updatedOpenSections[section] = true;
+        }
       });
     }
     setOpenSections(updatedOpenSections);
   }, [searchTerm]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest(".burger-menu") && !event.target.closest(".burger-toggle")) {
+        setIsMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [setIsMenuOpen]);
 
   return (
       <div className="top-controls">
@@ -187,30 +205,17 @@ const BurgerMenu = ({ onRoomClick, onCreateRoute }) => {
         {isMenuOpen && (
             <div className="burger-menu">
               <div className="language-switcher">
-                <button
-                    className={i18n.language === "ua" ? "active" : ""}
-                    onClick={() => i18n.changeLanguage("ua")}
-                >
-                  UA
-                </button>
-                <button
-                    className={i18n.language === "en" ? "active" : ""}
-                    onClick={() => i18n.changeLanguage("en")}
-                >
-                  EN
-                </button>
+                <button className={i18n.language === "ua" ? "active" : ""} onClick={() => i18n.changeLanguage("ua")}>UA</button>
+                <button className={i18n.language === "en" ? "active" : ""} onClick={() => i18n.changeLanguage("en")}>EN</button>
               </div>
 
               {!isRouteMode && (
-                  <button
-                      className="route-mode-btn"
-                      onClick={() => {
-                        setIsRouteMode(true);
-                        setRouteFrom(null);
-                        setRouteTo(null);
-                        onCreateRoute(null, null);
-                      }}
-                  >
+                  <button className="route-mode-btn" onClick={() => {
+                    setIsRouteMode(true);
+                    setRouteFrom(null);
+                    setRouteTo(null);
+                    onCreateRoute(null, null);
+                  }}>
                     {t("route.create")}
                   </button>
               )}
@@ -241,54 +246,38 @@ const BurgerMenu = ({ onRoomClick, onCreateRoute }) => {
                       </div>
                     </div>
 
-                    <button
-                        className="modern-cancel-route-btn"
-                        onClick={() => {
-                          setIsRouteMode(false);
-                          setRouteFrom(null);
-                          setRouteTo(null);
-                          onCreateRoute(null, null);
-                        }}
-                    >
+                    <button className="modern-cancel-route-btn" onClick={() => {
+                      setIsRouteMode(false);
+                      setRouteFrom(null);
+                      setRouteTo(null);
+                      onCreateRoute(null, null);
+                    }}>
                       {t("route.cancel")}
                     </button>
                   </div>
               )}
 
-
               <div className="search-wrapper">
-              <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" strokeWidth="2.5">
-                  <circle cx="11" cy="11" r="8"/>
-                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
                 </svg>
-
-                <input
-                    type="text"
-                    placeholder={t("rooms.placeholder")}
-                    className="search-input"
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                />
+                <input type="text" placeholder={t("rooms.placeholder")} className="search-input" value={searchTerm} onChange={handleSearchChange} />
               </div>
 
               {Object.keys(rooms).map((section) => {
                 const isOpen = openSections[section];
                 return (
                     <div className="menu-section" key={section}>
-                      {/* Кнопка категорії тепер має динамічний клас active, якщо вона відкрита */}
                       <button className={`accordion-toggle ${isOpen ? "active" : ""}`} onClick={() => toggleSection(section)}>
-        <span>
-          {section === "admin" ? t('rooms.sections.admin') : section === "economic" ? t('rooms.sections.economic') : t('rooms.sections.auditorium')}
-        </span>
-
-                        {/* Акуратна маленька стрілочка праворуч */}
-                        <svg className="accordion-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <span>
+                    {section === "entrances" ? t("rooms.sections.entrances") : section === "admin" ? t('rooms.sections.admin') : section === "economic" ? t('rooms.sections.economic') : t('rooms.sections.auditorium')}
+                  </span>
+                        <svg className="accordion-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                           {isOpen ? <polyline points="6 9 12 15 18 9" /> : <polyline points="9 18 15 12 9 6" />}
                         </svg>
                       </button>
 
-                      {openSections[section] && (
+                      {isOpen && (
                           <div className="accordion-content">
                             {rooms[section]
                                 .filter((room) => room.name.toLowerCase().includes(searchTerm))
@@ -297,11 +286,12 @@ const BurgerMenu = ({ onRoomClick, onCreateRoute }) => {
                                             className={`room-btn ${selectedRoom === room.id ? "selected" : ""}`}
                                             onClick={() => {
                                               if (!isRouteMode) {
-                                                handleRoomClick(room.id);
+                                                onRoomClick(room.id);
                                                 return;
                                               }
                                               if (!routeFrom) {
                                                 setRouteFrom(room.id);
+                                                onCreateRoute(room.id, routeTo);
                                               } else if (!routeTo) {
                                                 setRouteTo(room.id);
                                                 onCreateRoute(routeFrom, room.id);
