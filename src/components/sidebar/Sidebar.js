@@ -12,12 +12,12 @@ const Sidebar = ({ room, closeSidebar }) => {
   const roomInfo = {
     a1: {
       title: t("rooms.auditorium.a1"),
-      image: "../images/a1.jpg",
+      image: "/images/a1.jpg",
       text: "",
     },
     a2: {
       title: t("rooms.auditorium.a2"),
-      image: "../images/a2.jpg",
+      image: "/images/a2.jpg",
       text: "",
       features: ["projector"]
     },
